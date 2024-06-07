@@ -5,7 +5,6 @@
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
           <element id="module-output" name="HttpRequest" />
-          <element id="module-output" name="HelloServlet" />
         </element>
       </element>
       <element id="javaee-facet-resources" facet="HttpRequest/web/Web" />
