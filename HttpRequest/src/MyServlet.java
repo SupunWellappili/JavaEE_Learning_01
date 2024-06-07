@@ -8,10 +8,10 @@ import java.io.PrintWriter;
 
 
 @WebServlet(urlPatterns = "/hello")
-public class HttpRequest extends HttpServlet {
+public class MyServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter writer = resp.getWriter();
-        writer.write("Application 2 Response Generated");
+        writer.write("Hello, I am from HTTP Request module");
     }
 }
