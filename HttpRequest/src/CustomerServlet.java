@@ -11,6 +11,8 @@ import java.io.PrintWriter;
 public class CustomerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String method = req.getMethod();
+        System.out.println("Request Method is : "+method);
         PrintWriter writer = resp.getWriter();
         writer.write("Response form Customer Servlet Generated ");
     }
@@ -32,7 +34,7 @@ public class CustomerServlet extends HttpServlet {
         PrintWriter writer = resp.getWriter();
         writer.write("Delete Method Called from Customer Servlet");
     }
-    
+
 /*
     @Override
     protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
