@@ -32,12 +32,13 @@ public class CustomerServlet extends HttpServlet {
         PrintWriter writer = resp.getWriter();
         writer.write("Delete Method Called from Customer Servlet");
     }
-
+    
+/*
     @Override
     protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter writer = resp.getWriter();
         writer.write("Option Method Called from Customer Servlet");
-    }
+    }*/
 }
 
 
