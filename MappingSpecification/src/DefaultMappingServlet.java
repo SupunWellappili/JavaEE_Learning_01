@@ -6,10 +6,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-@WebServlet(urlPatterns = "/customer")
-public class ExactMappingServlet extends HttpServlet {
+@WebServlet(urlPatterns = "/")
+public class DefaultMappingServlet  extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("Customer Get Request Was Received");
+        System.out.println("Default Mapping Servlet Invoke");
     }
 }
