@@ -5,11 +5,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-//.png/.ijse/.gif/.supun/.jpeg/.com/.lk
-@WebServlet(urlPatterns = "*.supun")
-public class ExtensionMappingServlet extends HttpServlet {
+
+@WebServlet(urlPatterns = {"/ss","/ww"})
+public class MultipleMappingServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("Extension Mapping Servlet Invoke");
+        System.out.println("Use String Objects");
     }
 }
