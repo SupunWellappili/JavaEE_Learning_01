@@ -10,6 +10,6 @@ import java.io.IOException;
 public class DefaultMappingServlet  extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("Default Mapping Servlet Invoke 01");
+        System.out.println("Default Mapping Servlet Invoke");
     }
 }
