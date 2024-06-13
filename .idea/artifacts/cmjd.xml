@@ -1,7 +1,7 @@
 <component name="ArtifactManager">
-  <artifact type="exploded-war" name="cmjd">
+  <artifact type="war" name="cmjd">
     <output-path>$PROJECT_DIR$/out/artifacts/cmjd</output-path>
-    <root id="root">
+    <root id="archive" name="cmjd.war">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
           <element id="module-output" name="HttpRequest" />

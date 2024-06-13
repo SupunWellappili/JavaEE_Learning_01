@@ -2,12 +2,12 @@
   <artifact type="war" name="mapping">
     <output-path>$PROJECT_DIR$/out/artifacts/mapping</output-path>
     <root id="archive" name="mapping.war">
-      <element id="javaee-facet-resources" facet="MappingSpecification/web/Web" />
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
           <element id="module-output" name="MappingSpecification" />
         </element>
       </element>
+      <element id="javaee-facet-resources" facet="MappingSpecification/web/Web" />
     </root>
   </artifact>
 </component>
