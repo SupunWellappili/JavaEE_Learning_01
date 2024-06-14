@@ -37,9 +37,10 @@
         $.ajax({
             url: "http://localhost:8080/appone/customer",
             method: "GET",
-            dataType: "JSON", //Please Convert the Response into JSON
+            //dataType: "JSON", //Please Convert the Response into JSON
             success: function (resp) {
-                console.log(resp)
+                console.log(typeof resp);
+                console.log(resp);
 
                 for (const customer of resp) {
                     /*customer.id;
@@ -50,7 +51,6 @@
                     let row = `<tr><td>${customer.id}</td><td>${customer.name}</td><td>${customer.address}</td><td>${customer.salary}</td></tr>`
                     $("#tblCustomerJSON").append(row);
                 }
-
             }
         })
     })
