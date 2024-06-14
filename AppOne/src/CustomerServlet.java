@@ -19,7 +19,11 @@ public class CustomerServlet extends HttpServlet {
         PrintWriter writer = resp.getWriter();
         writer.write("Appone!!");*/
 
-            resp.setContentType("application/json"); //MIME Types
+            resp.setContentType("application/json"); //MIME Types (Multipurpose Internet Mail Extensions )
+
+        resp.addHeader("Institude", "IJSE");
+        resp.addHeader("KEY", "VALUE");
+
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
