@@ -21,7 +21,8 @@
         <th scope="col">SALARY</th>
     </tr>
     </thead>
-    <tbody id="tblCustomer">
+    <tbody id="tblCustomerJSON">
+<tr></tr>
     </tbody>
 </table>
 
@@ -32,12 +33,23 @@
     //////////////////////////JSON////////////////////////////////////
 
     $("#btnClick").click(function () {
+        $("#tblCustomerJSON").empty();
         $.ajax({
             url: "http://localhost:8080/appone/customer",
             method: "GET",
             dataType: "JSON", //Please Convert the Response into JSON
             success: function (resp) {
                 console.log(resp)
+
+                for (const customer of resp) {
+                    /*customer.id;
+                    customer.name;
+                    customer.address;
+                    customer.salary;*/
+
+                    let row = `<tr><td>${customer.id}</td><td>${customer.name}</td><td>${customer.address}</td><td>${customer.salary}</td></tr>`
+                    $("#tblCustomerJSON").append(row);
+                }
 
             }
         })

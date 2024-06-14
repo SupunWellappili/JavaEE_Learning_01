@@ -42,7 +42,7 @@ public class CustomerServlet extends HttpServlet {
                 //String customer = "[{'id' : '001', 'name' : 'supun', 'address' : 'Galle', salary : 25000},{'id' : '002', 'name' : 'chandana', 'address' : 'matara', salary : 50000}]";
 
                 String customer = "{\"id\": \"" + id + "\", \"name\":\"" + name + "\",\"address\" : \"" + address + "\", \"salary\" : " + salary + "},";
-                allRecords += customer;
+                allRecords = allRecords + customer;
 
             }
 
