@@ -26,16 +26,34 @@ public class CustomerServlet extends HttpServlet {
                     "jdbc:mysql://localhost:3306/Test", "root", "87654321");
             Statement stmt = connection.createStatement();
             ResultSet rst = stmt.executeQuery("select * from customer");
+
+            String allRecords = " ";
+
             while (rst.next()) {
                 String id = rst.getString(1);
                 String name = rst.getString(2);
                 String address = rst.getString(3);
-                Double salary = rst.getDouble(4);
+                double salary = rst.getDouble(4);
 
-                System.out.println(id+" "+name+" "+address+" "+salary);
+                //System.out.println(id + " " + name + " " + address + " " + salary);
+
+                //Convert one record for json
+                //String customer = "{'id' : '001', 'name' : 'supun', 'address' : 'Galle', salary : 25000}";
+                //String customer = "[{'id' : '001', 'name' : 'supun', 'address' : 'Galle', salary : 25000},{'id' : '002', 'name' : 'chandana', 'address' : 'matara', salary : 50000}]";
+
+                String customer = "{\"id\": \"" + id + "\", \"name\":\"" + name + "\",\"address\" : \"" + address + "\", \"salary\" : " + salary + "},";
+                allRecords += customer;
+
             }
+
+            String finalJson = "[" + allRecords.substring(0, allRecords.length() - 1) + "]";
+
+            PrintWriter writer = resp.getWriter();
+            //  writer.write(); // text , xml , html , json
+            writer.write(finalJson);
+
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
 }
