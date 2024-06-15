@@ -12,31 +12,31 @@
 <h1>Hello JSON type | jQuery...!</h1>
 
 <!--customer Save-->
-<div class="row-mt-3">
+<div class="row-mt-3" >
     <div class="col-5">
-        <form action="">
+        <form action="customer" method="POST">
             <div class="mb-3">
                 <label for="CusID" class="form-label">Customer ID </label>
-                <input type="text" class="form-control" id="cusID" placeholder="Customer ID">
+                <input type="text" class="form-control" id="cusID" placeholder="Customer ID" name="customerID">
             </div>
 
             <div class="mb-3">
                 <label for="cusName" class="form-label">Customer Name </label>
-                <input type="text" class="form-control" id="cusName" placeholder="Customer ID">
+                <input type="text" class="form-control" id="cusName" placeholder="Customer ID" name="customerName">
             </div>
 
             <div class="mb-3">
                 <label for="cusAddress" class="form-label">Customer Address </label>
-                <input type="text" class="form-control" id="cusAddress" placeholder="Customer ID">
+                <input type="text" class="form-control" id="cusAddress" placeholder="Customer ID" name="customerAddress">
             </div>
 
             <div class="mb-3">
                 <label for="cusSalary" class="form-label">Customer Salary </label>
-                <input type="text" class="form-control" id="cusSalary" placeholder="Customer ID">
+                <input type="text" class="form-control" id="cusSalary" placeholder="Customer ID" name="customerSalary">
             </div>
 
             <div class="mb-3">
-                <button class="btn btn-primary">Save Customer</button>
+                <button type="submit" class="btn btn-primary">Save Customer</button>
             </div>
 
         </form>
