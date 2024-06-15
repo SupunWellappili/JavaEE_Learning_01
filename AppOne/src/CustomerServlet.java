@@ -19,7 +19,7 @@ public class CustomerServlet extends HttpServlet {
         PrintWriter writer = resp.getWriter();
         writer.write("Appone!!");*/
 
-            resp.setContentType("application/json"); //MIME Types (Multipurpose Internet Mail Extensions )
+/*            resp.setContentType("application/json"); //MIME Types (Multipurpose Internet Mail Extensions )
 
         resp.addHeader("Institude", "IJSE");
         resp.addHeader("KEY", "VALUE");
@@ -59,7 +59,16 @@ public class CustomerServlet extends HttpServlet {
 
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
+
+        //name value from the input field
+        String customerID = req.getParameter("customerID");
+        String customerName = req.getParameter("customerName");
+        String customerAddress = req.getParameter("customerAddress");
+        String customerSalary = req.getParameter("customerSalary");
+
+        System.out.println(customerID+" "+customerName+" "+customerAddress+" "+customerSalary);
+
     }
 
     @Override
