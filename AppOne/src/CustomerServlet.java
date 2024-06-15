@@ -3,12 +3,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.*;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 
 
 @WebServlet(urlPatterns = "/customer")
@@ -19,7 +17,7 @@ public class CustomerServlet extends HttpServlet {
         PrintWriter writer = resp.getWriter();
         writer.write("Appone!!");*/
 
-/*            resp.setContentType("application/json"); //MIME Types (Multipurpose Internet Mail Extensions )
+        resp.setContentType("application/json"); //MIME Types (Multipurpose Internet Mail Extensions )
 
         resp.addHeader("Institude", "IJSE");
         resp.addHeader("KEY", "VALUE");
@@ -59,15 +57,17 @@ public class CustomerServlet extends HttpServlet {
 
         } catch (Exception e) {
             e.printStackTrace();
-        }*/
+        }
 
-        //name value from the input field
+       /*
+       //name value from the input field
         String customerID = req.getParameter("customerID");
         String customerName = req.getParameter("customerName");
         String customerAddress = req.getParameter("customerAddress");
         String customerSalary = req.getParameter("customerSalary");
 
         System.out.println(customerID+" "+customerName+" "+customerAddress+" "+customerSalary);
+        */
 
     }
 
@@ -83,7 +83,30 @@ public class CustomerServlet extends HttpServlet {
         String customerAddress = req.getParameter("customerAddress");
         String customerSalary = req.getParameter("customerSalary");
 
-        System.out.println(customerID+" "+customerName+" "+customerAddress+" "+customerSalary);
+        System.out.println(customerID + " " + customerName + " " + customerAddress + " " + customerSalary);
+
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/Test", "root", "87654321");
+            PreparedStatement pstm = connection.prepareStatement("INSERT into Customer VALUES (?,?,?,?)");
+
+            pstm.setObject(1, customerID);
+            pstm.setObject(2, customerName);
+            pstm.setObject(3, customerAddress);
+            pstm.setObject(4, customerSalary);
+
+            boolean b = pstm.executeUpdate() > 0;
+            PrintWriter writer = resp.getWriter();
+            if (b) {
+                writer.write("customer Added!");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
     }
 }
