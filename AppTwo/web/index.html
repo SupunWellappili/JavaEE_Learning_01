@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AJAX With jQuery copy</title>
+    <title>AJAX With jQuery copy (App Two)</title>
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
 
 </head>
@@ -37,12 +37,11 @@
             </div>
 
             <div class="mb-3">
-                <button type="submit" class="btn btn-primary">Save Customer</button>
+                <button type="button" class="btn btn-primary">Save Customer</button>
             </div>
         </form>
     </div>
 </div>
-
 
 <button id="btnClick" type="button" class="btn btn-outline-warning">Save a Request JSON</button>
 
@@ -60,36 +59,35 @@
     </tbody>
 </table>
 
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
 
-    <script>
+<script>
 
-        //////////////////////////JSON////////////////////////////////////
+    //////////////////////////JSON////////////////////////////////////
 
-        $("#btnClick").click(function () {
-            $("#tblCustomerJSON").empty();
-            $.ajax({
-                url: "http://localhost:8080/appone/customer",
-                method: "GET",
-                //dataType: "JSON", //Please Convert the Response into JSON
-                success: function (resp) {
-                    console.log(typeof resp);
-                    console.log(resp);
+    $("#btnClick").click(function () {
+        $("#tblCustomerJSON").empty();
+        $.ajax({
+            url: "http://localhost:8080/apptwo/customer",
+            method: "GET",
+            //dataType: "JSON", //Please Convert the Response into JSON
+            success: function (resp) {
+                console.log(typeof resp);
+                console.log(resp);
 
-                    for (const customer of resp) {
-                        /*customer.id;
-                        customer.name;
-                        customer.address;
-                        customer.salary;*/
+                for (const customer of resp) {
+                    /*customer.id;
+                    customer.name;
+                    customer.address;
+                    customer.salary;*/
 
-                        let row = `<tr><td>${customer.id}</td><td>${customer.name}</td><td>${customer.address}</td><td>${customer.salary}</td></tr>`
-                        $("#tblCustomerJSON").append(row);
-                    }
+                    let row = `<tr><td>${customer.id}</td><td>${customer.name}</td><td>${customer.address}</td><td>${customer.salary}</td></tr>`
+                    $("#tblCustomerJSON").append(row);
                 }
-            })
+            }
         })
-    </script>
-
+    })
+</script>
 </body>
 </html>
