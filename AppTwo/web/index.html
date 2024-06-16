@@ -66,35 +66,8 @@
 
 <script>
 
-    //////////////////////////JSON////////////////////////////////////
 
-    $("#btnSaveCustomer").click(function () {
-        $("#tblCustomerJSON").empty();
-        var data = $("#customerForm").serialize();// Return Query String of from with name : type- value
-        console.log(data);
-        $.ajax({
-            url: "http://localhost:8080/apptwo/customer",
-            method: "POST",
-            data:data, //If we send data with the Request
-            success: function (res) {
-               // console.log(typeof resp);
-                console.log( res);
-
-
-                for (const customer of res) {
-                    customer.id;
-                    customer.name;
-                    customer.address;
-                    customer.salary;
-
-                }
-            }
-        })
-    });
-
-    //////////////////////////Button two////////////////////////////////////
-
-    $("#btnClick").click(function () {
+    function loadAllCustomer(){
         $("#tblCustomerJSON").empty();
         $.ajax({
             url: "http://localhost:8080/apptwo/customer",
@@ -115,7 +88,44 @@
                 }
             }
         })
+    }
+
+    //////////////////////////JSON////////////////////////////////////
+
+    $("#btnSaveCustomer").click(function () {
+        $("#tblCustomerJSON").empty();
+        var data = $("#customerForm").serialize();// Return Query String of from with name : type- value
+        console.log(data);
+        $.ajax({
+            url: "http://localhost:8080/apptwo/customer",
+            method: "POST",
+            data:data, //If we send data with the Request
+            success: function (res) {
+                // console.log(typeof resp);
+                console.log( res);
+
+
+                for (const customer of res) {
+                    customer.id;
+                    customer.name;
+                    customer.address;
+                    customer.salary;
+                }
+
+                loadAllCustomer();
+            }
+        })
+    });
+
+    //////////////////////////Button two////////////////////////////////////
+
+
+    $("#btnClick").click(function () {
+        loadAllCustomer();
     })
+
+
+
 
 </script>
 </body>
