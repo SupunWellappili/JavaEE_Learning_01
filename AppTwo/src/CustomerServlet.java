@@ -27,7 +27,7 @@ public class CustomerServlet extends HttpServlet {
             Connection connection = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/Test", "root", "87654321");
             Statement stmt = connection.createStatement();
-            ResultSet rst = stmt.executeQuery("select * from customer");
+            ResultSet rst = stmt.executeQuery("SELECT * FROM customer");
 
             String allRecords = " ";
 
@@ -44,7 +44,7 @@ public class CustomerServlet extends HttpServlet {
                 //String customer = "[{'id' : '001', 'name' : 'supun', 'address' : 'Galle', salary : 25000},{'id' : '002', 'name' : 'chandana', 'address' : 'matara', salary : 50000}]";
 
                 String customer = "{\"id\": \"" + id + "\", \"name\":\"" + name + "\",\"address\" : \"" + address + "\", \"salary\" : " + salary + "},";
-                allRecords = allRecords + customer;
+                 allRecords += customer;
 
             }
 
@@ -69,7 +69,6 @@ public class CustomerServlet extends HttpServlet {
         */
 
     }
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         /*System.out.println("Customer Post Method Invoke");

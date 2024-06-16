@@ -14,7 +14,7 @@
 <!--customer Save-->
 <div class="row-mt-3">
     <div class="col-5">
-        <form action="customer" method="POST">
+        <form id="customerForm">
             <div class="mb-3">
                 <label for="CusID" class="form-label">Customer ID </label>
                 <input type="text" class="form-control" id="cusID" placeholder="Customer ID" name="customerID">
@@ -37,13 +37,14 @@
             </div>
 
             <div class="mb-3">
-                <button type="button" class="btn btn-primary">Save Customer</button>
+                <button type="button" id="btnSaveCustomer" class="btn btn-primary">Save Customer</button>
             </div>
         </form>
     </div>
 </div>
 
-<button id="btnClick" type="button" class="btn btn-outline-warning">Save a Request JSON</button>
+<button id="btnClick"  class="btn btn-outline-warning">Save a Request JSON</button>
+
 
 <table class="table table-hover table-info">
     <thead>
@@ -60,11 +61,38 @@
 </table>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<!--<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
 
 
 <script>
 
     //////////////////////////JSON////////////////////////////////////
+
+    $("#btnSaveCustomer").click(function () {
+        $("#tblCustomerJSON").empty();
+        var data = $("#customerForm").serialize();// Return Query String of from with name : type- value
+        console.log(data);
+        $.ajax({
+            url: "http://localhost:8080/apptwo/customer",
+            method: "POST",
+            data:data, //If we send data with the Request
+            success: function (res) {
+               // console.log(typeof resp);
+                console.log( res);
+
+
+                for (const customer of res) {
+                    customer.id;
+                    customer.name;
+                    customer.address;
+                    customer.salary;
+
+                }
+            }
+        })
+    });
+
+    //////////////////////////Button two////////////////////////////////////
 
     $("#btnClick").click(function () {
         $("#tblCustomerJSON").empty();
@@ -88,6 +116,7 @@
             }
         })
     })
+
 </script>
 </body>
 </html>
