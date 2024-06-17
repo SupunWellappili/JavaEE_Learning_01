@@ -43,6 +43,12 @@
             <div class="mb-3">
                 <button type="button" id="btnDeleteCustomer" class="btn btn-outline-danger">Delete Customer</button>
             </div>
+
+
+            <div class="mb-3">
+                <button type="button" id="btnUpdateCustomer" class="btn btn-outline-dark">Update Customer</button>
+            </div>
+
         </form>
     </div>
 </div>
@@ -60,7 +66,12 @@
     </tr>
     </thead>
     <tbody id="tblCustomerJSON">
-    <tr></tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
     </tbody>
 </table>
 
@@ -81,6 +92,7 @@
                 console.log(typeof resp);
                 console.log(resp);
 
+
                 for (const customer of resp) {
                     /*customer.id;
                     customer.name;
@@ -90,9 +102,31 @@
                     let row = `<tr><td>${customer.id}</td><td>${customer.name}</td><td>${customer.address}</td><td>${customer.salary}</td></tr>`
                     $("#tblCustomerJSON").append(row);
                 }
+                callMethod();
             }
-        })
+        });
+
     }
+
+
+    function callMethod() {
+        $("#tblCustomerJSON>tr").click(function () {
+
+            //Get Values from the selected row
+            let id = $(this).children().eq(0).text();
+            let name = $(this).children().eq(1).text();
+            let address = $(this).children().eq(2).text();
+            let salary = $(this).children().eq(3).text();
+
+
+            //Set Value to the text-Filed
+            $("#cusID").val(id);
+            $("#cusName").val(name);
+            $("#cusAddress").val(address);
+            $("#cusSalary").val(salary);
+        });
+    }
+
 
     //////////////////////////Save Button////////////////////////////////////
 
@@ -107,6 +141,7 @@
             success: function (res) {
                 // console.log(typeof resp);
                 console.log(res);
+                alert(res)
 
 
                 for (const customer of res) {
@@ -137,24 +172,30 @@
 
         let customerID = $("#cusID").val();
         $.ajax({
-            url: "http://localhost:8080/apptwo/customer?cusID="+customerID,
+            url: "http://localhost:8080/apptwo/customer?cusID=" + customerID,
             method: "DELETE",
             success: function (resp) {
                 console.log("deletedddd .html")
                 console.log(typeof resp);
                 console.log(resp);
-
-
-                for (const customer of resp) {
-                    customer.id;
-                    customer.name;
-                    customer.address;
-                    customer.salary;
-                }
+                alert(resp);
 
                 loadAllCustomer();
             }
         })
+    })
+
+    //////////////////////////Update Button////////////////////////////////////
+
+    $("#btnUpdateCustomer").click(function () {
+
+  /*      $.ajax({
+            url: "http://localhost:8080/apptwo/customer",
+            method: "PUT",
+            success: function (resp) {
+                console.log(resp);
+            }
+        })*/
     })
 
 
