@@ -44,7 +44,7 @@ public class CustomerServlet extends HttpServlet {
                 //String customer = "[{'id' : '001', 'name' : 'supun', 'address' : 'Galle', salary : 25000},{'id' : '002', 'name' : 'chandana', 'address' : 'matara', salary : 50000}]";
 
                 String customer = "{\"id\": \"" + id + "\", \"name\":\"" + name + "\",\"address\" : \"" + address + "\", \"salary\" : " + salary + "},";
-                 allRecords += customer;
+                allRecords += customer;
 
             }
 
@@ -69,6 +69,7 @@ public class CustomerServlet extends HttpServlet {
         */
 
     }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         /*System.out.println("Customer Post Method Invoke");
@@ -104,5 +105,16 @@ public class CustomerServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("Request Received for delete");
+        //if we send data form the application/www-from-urlencoded type doDelete will not
+        //catch values form req.getParameter(); that type is not supported
+        //but we can send data via Query String
+        String customerID = req.getParameter("cusID");
+        System.out.println(customerID);
     }
 }

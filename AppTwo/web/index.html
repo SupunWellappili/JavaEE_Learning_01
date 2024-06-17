@@ -37,13 +37,17 @@
             </div>
 
             <div class="mb-3">
-                <button type="button" id="btnSaveCustomer" class="btn btn-primary">Save Customer</button>
+                <button type="button" id="btnSaveCustomer" class="btn btn-outline-primary">Save Customer</button>
+            </div>
+
+            <div class="mb-3">
+                <button type="button" id="btnDeleteCustomer" class="btn btn-outline-danger">Delete Customer</button>
             </div>
         </form>
     </div>
 </div>
 
-<button id="btnClick"  class="btn btn-outline-warning">Save a Request JSON</button>
+<button id="btnClick" class="btn btn-outline-warning">Save a Request JSON</button>
 
 
 <table class="table table-hover table-info">
@@ -67,7 +71,7 @@
 <script>
 
 
-    function loadAllCustomer(){
+    function loadAllCustomer() {
         $("#tblCustomerJSON").empty();
         $.ajax({
             url: "http://localhost:8080/apptwo/customer",
@@ -90,7 +94,7 @@
         })
     }
 
-    //////////////////////////JSON////////////////////////////////////
+    //////////////////////////Save Button////////////////////////////////////
 
     $("#btnSaveCustomer").click(function () {
         $("#tblCustomerJSON").empty();
@@ -99,10 +103,10 @@
         $.ajax({
             url: "http://localhost:8080/apptwo/customer",
             method: "POST",
-            data:data, //If we send data with the Request
+            data: data, //If we send data with the Request
             success: function (res) {
                 // console.log(typeof resp);
-                console.log( res);
+                console.log(res);
 
 
                 for (const customer of res) {
@@ -117,7 +121,7 @@
         })
     });
 
-    //////////////////////////Button two////////////////////////////////////
+    //////////////////////////All Load Button////////////////////////////////////
 
 
     $("#btnClick").click(function () {
@@ -125,6 +129,33 @@
     })
 
 
+    //////////////////////////Delete Button////////////////////////////////////
+
+
+    //http://localhost:8080/apptwo/customer?cusID=C-001&cusName=Supun....
+    $("#btnDeleteCustomer").click(function () {
+
+        let customerID = $("#cusID").val();
+        $.ajax({
+            url: "http://localhost:8080/apptwo/customer?cusID="+customerID,
+            method: "DELETE",
+            success: function (resp) {
+                console.log("deletedddd .html")
+                console.log(typeof resp);
+                console.log(resp);
+
+
+                for (const customer of resp) {
+                    customer.id;
+                    customer.name;
+                    customer.address;
+                    customer.salary;
+                }
+
+                loadAllCustomer();
+            }
+        })
+    })
 
 
 </script>
