@@ -188,11 +188,12 @@
         let formData = $("#customerForm").serialize();
         console.log(formData)
         $.ajax({
-            url: "http://localhost:8080/apptwo/customer",
+            url: "http://localhost:8080/apptwo/customer?"+formData,
             method: "PUT",
-            data: formData,
+            //data: formData,
             success: function (resp) {
-                console.log(resp);
+              //  alert(resp);
+                console.log(resp)
             }
         })
     })

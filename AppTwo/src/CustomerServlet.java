@@ -149,5 +149,26 @@ public class CustomerServlet extends HttpServlet {
 
         System.out.println(customerID + " " + customerName + " " + customerAddress + " " + customerSalary);
 
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/Test", "root", "87654321");
+            PreparedStatement pstm = connection.prepareStatement("UPDATE FROM customer VALUES (?,?,?,?)");
+
+            pstm.setObject(1, customerID);
+            pstm.setObject(2, customerName);
+            pstm.setObject(3, customerAddress);
+            pstm.setObject(4, customerSalary);
+
+            boolean b = pstm.executeUpdate() > 0;
+            PrintWriter writer = resp.getWriter();
+            if (b) {
+                writer.write("customer updated !");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }
