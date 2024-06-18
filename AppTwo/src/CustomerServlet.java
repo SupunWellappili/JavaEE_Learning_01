@@ -1,3 +1,5 @@
+import com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -89,7 +91,7 @@ public class CustomerServlet extends HttpServlet {
             Class.forName("com.mysql.jdbc.Driver");
             Connection connection = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/Test", "root", "87654321");
-            PreparedStatement pstm = connection.prepareStatement("INSERT into Customer VALUES (?,?,?,?)");
+            PreparedStatement pstm = connection.prepareStatement("INSERT into customer VALUES (?,?,?,?)");
 
             pstm.setObject(1, customerID);
             pstm.setObject(2, customerName);
@@ -147,18 +149,19 @@ public class CustomerServlet extends HttpServlet {
         String customerAddress = req.getParameter("customerAddress");
         String customerSalary = req.getParameter("customerSalary");
 
-        System.out.println(customerID + " " + customerName + " " + customerAddress + " " + customerSalary);
+       // System.out.println(customerID + " " + customerName + " " + customerAddress + " " + customerSalary);
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection connection = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/Test", "root", "87654321");
-            PreparedStatement pstm = connection.prepareStatement("UPDATE FROM customer VALUES (?,?,?,?)");
 
-            pstm.setObject(1, customerID);
-            pstm.setObject(2, customerName);
-            pstm.setObject(3, customerAddress);
-            pstm.setObject(4, customerSalary);
+            PreparedStatement pstm = connection.prepareStatement("UPDATE  customer SET name=?, address=?, salary=? WHERE id=?");
+
+            pstm.setObject(1, customerName);
+            pstm.setObject(2, customerAddress);
+            pstm.setObject(3, customerSalary);
+            pstm.setObject(4, customerID);
 
             boolean b = pstm.executeUpdate() > 0;
             PrintWriter writer = resp.getWriter();
@@ -166,9 +169,11 @@ public class CustomerServlet extends HttpServlet {
                 writer.write("customer updated !");
             }
 
-        } catch (Exception e) {
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
+        }catch (SQLException throwables){
+            throwables.printStackTrace();
+            resp.sendError(500,throwables.getMessage());
         }
-
     }
 }
