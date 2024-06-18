@@ -67,10 +67,7 @@
     </thead>
     <tbody id="tblCustomerJSON">
     <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+
     </tr>
     </tbody>
 </table>
@@ -102,14 +99,14 @@
                     let row = `<tr><td>${customer.id}</td><td>${customer.name}</td><td>${customer.address}</td><td>${customer.salary}</td></tr>`
                     $("#tblCustomerJSON").append(row);
                 }
-                callMethod();
+                bindClickEvents();
             }
         });
 
     }
 
 
-    function callMethod() {
+    function bindClickEvents() {
         $("#tblCustomerJSON>tr").click(function () {
 
             //Get Values from the selected row
@@ -188,14 +185,16 @@
     //////////////////////////Update Button////////////////////////////////////
 
     $("#btnUpdateCustomer").click(function () {
-
-  /*      $.ajax({
+        let formData = $("#customerForm").serialize();
+        console.log(formData)
+        $.ajax({
             url: "http://localhost:8080/apptwo/customer",
             method: "PUT",
+            data: formData,
             success: function (resp) {
                 console.log(resp);
             }
-        })*/
+        })
     })
 
 

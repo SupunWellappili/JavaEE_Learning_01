@@ -147,25 +147,7 @@ public class CustomerServlet extends HttpServlet {
         String customerAddress = req.getParameter("customerAddress");
         String customerSalary = req.getParameter("customerSalary");
 
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/Test", "root", "87654321");
-            PreparedStatement pstm = connection.prepareStatement("UPDATE INTO Customer VALUES (?,?,?,?)");
+        System.out.println(customerID + " " + customerName + " " + customerAddress + " " + customerSalary);
 
-            pstm.setObject(1, customerID);
-            pstm.setObject(2, customerName);
-            pstm.setObject(3, customerAddress);
-            pstm.setObject(4, customerSalary);
-
-            boolean b = pstm.executeUpdate() > 0;
-            PrintWriter writer = resp.getWriter();
-            if (b) {
-                writer.write("customer Added!");
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }
