@@ -1,8 +1,5 @@
 
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
-import javax.json.JsonReader;
+import javax.json.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,14 +20,35 @@ public class JSONServlet extends HttpServlet {
         //Content-Type : application/json;charset=ISO-8859-1
         resp.setContentType("application/json");
 
-        JsonObjectBuilder objectB = Json.createObjectBuilder();
+        //How to generate a single JSON object using JSON Processing
+        /*JsonObjectBuilder objectB = Json.createObjectBuilder();
         objectB.add("id","c-001");
         objectB.add("name","Ravi");
         objectB.add("address","Galle");
         JsonObject build = objectB.build();
 
         PrintWriter writer = resp.getWriter();
-        writer.print(build);
+        writer.print(build);*/
+
+        //How to generate a array JSON object using JSON Processing
+        JsonArrayBuilder arrayBuilder= Json.createArrayBuilder();
+
+        JsonObjectBuilder objectB = Json.createObjectBuilder();
+        objectB.add("id","c-001");
+        objectB.add("name","Ravi");
+        objectB.add("address","Galle");
+
+        JsonObjectBuilder objectB2 = Json.createObjectBuilder();
+        objectB2.add("id","c-001");
+        objectB2.add("name","Ravi");
+        objectB2.add("address","Galle");
+
+        arrayBuilder.add(objectB.build());
+        arrayBuilder.add(objectB2.build());
+
+        PrintWriter writer = resp.getWriter();
+        writer.print(arrayBuilder.build());
+
     }
 
     @Override
