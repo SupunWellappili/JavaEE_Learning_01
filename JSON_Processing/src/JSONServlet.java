@@ -1,9 +1,9 @@
 
 import javax.json.Json;
 import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import javax.json.JsonReader;
 import javax.servlet.ServletException;
-import javax.servlet.ServletInputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -11,8 +11,28 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(urlPatterns = "/customer")
-public class CustomerServlet extends HttpServlet {
+@WebServlet(urlPatterns = "/json")
+public class JSONServlet extends HttpServlet {
+
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //"id": "c-001" , "name":"Ravi", "address: "Galle"
+
+
+        //Content-Type : application/json;charset=ISO-8859-1
+        resp.setContentType("application/json");
+
+        JsonObjectBuilder objectB = Json.createObjectBuilder();
+        objectB.add("id","c-001");
+        objectB.add("name","Ravi");
+        objectB.add("address","Galle");
+        JsonObject build = objectB.build();
+
+        PrintWriter writer = resp.getWriter();
+        writer.print(build);
+    }
+
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("Someone called DO PUT method");
@@ -36,6 +56,7 @@ public class CustomerServlet extends HttpServlet {
 
 
         //How to work with JSON Processing
+        //How to retrieve data from JSON request using JSON Processing spec
         JsonReader reader = Json.createReader(req.getReader());
         JsonObject jsonObject = reader.readObject();
         
@@ -44,7 +65,6 @@ public class CustomerServlet extends HttpServlet {
 
         String name = jsonObject.getString("name");
         System.out.println(name);
-
 
     }
 }
