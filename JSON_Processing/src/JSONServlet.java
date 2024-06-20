@@ -31,22 +31,22 @@ public class JSONServlet extends HttpServlet {
         writer.print(build);*/
 
         //How to generate a array JSON object using JSON Processing
-        JsonArrayBuilder arrayBuilder= Json.createArrayBuilder();
+        JsonArrayBuilder arrayBuilder= Json.createArrayBuilder();//create a json array
 
-        JsonObjectBuilder objectB = Json.createObjectBuilder();
+        JsonObjectBuilder objectB = Json.createObjectBuilder(); //create json object one
         objectB.add("id","c-001");
         objectB.add("name","Ravi");
         objectB.add("address","Galle");
 
-        JsonObjectBuilder objectB2 = Json.createObjectBuilder();
+        JsonObjectBuilder objectB2 = Json.createObjectBuilder();//create json object two
         objectB2.add("id","c-001");
         objectB2.add("name","Ravi");
         objectB2.add("address","Galle");
 
-        arrayBuilder.add(objectB.build());
-        arrayBuilder.add(objectB2.build());
+        arrayBuilder.add(objectB.build()); //add json object one to the json array
+        arrayBuilder.add(objectB2.build()); //add json object two to the json array
 
-        PrintWriter writer = resp.getWriter();
+        PrintWriter writer = resp.getWriter();//then print the json array as the response
         writer.print(arrayBuilder.build());
 
     }
