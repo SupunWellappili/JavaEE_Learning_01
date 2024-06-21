@@ -9,7 +9,7 @@
 <body>
 
 <!--File Type JSON-->
-<h1>Hello JSON type | jQuery...!</h1>
+<h1> Hello JSON type | jQuery...!</h1>
 
 <!--customer Save-->
 <div class="row-mt-3">
@@ -72,17 +72,16 @@
     </tbody>
 </table>
 
+
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <!--<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
 
 
 <script>
-
-
     function loadAllCustomer() {
         $("#tblCustomerJSON").empty();
         $.ajax({
-            url: "http://localhost:8080/apptwo/customer",
+            url: "http://localhost:8080/json/customer",
             method: "GET",
             //dataType: "JSON", //Please Convert the Response into JSON
             success: function (resp) {
@@ -90,7 +89,7 @@
                 console.log(resp);
 
 
-                for (const customer of resp) {
+                for (const customer of resp.data) { //resp.data --> Table loaded
                     /*customer.id;
                     customer.name;
                     customer.address;
@@ -129,10 +128,10 @@
 
     $("#btnSaveCustomer").click(function () {
         $("#tblCustomerJSON").empty();
-        var data = $("#customerForm").serialize();// Return Query String of from with name : type- value
+        var data = $("#customerForm").serialize();// Return Query String of from with name : type - value
         console.log(data);
         $.ajax({
-            url: "http://localhost:8080/apptwo/customer",
+            url: "http://localhost:8080/json/customer",
             method: "POST",
             data: data, //If we send data with the Request
             success: function (res) {
@@ -169,7 +168,7 @@
 
         let customerID = $("#cusID").val();
         $.ajax({
-            url: "http://localhost:8080/apptwo/customer?cusID=" + customerID,
+            url: "http://localhost:8080/json/customer?cusID=" + customerID,
             method: "DELETE",
             success: function (resp) {
                 console.log("deletedddd .html")
@@ -188,7 +187,7 @@
         let formData = $("#customerForm").serialize();
         console.log(formData)
         $.ajax({
-            url: "http://localhost:8080/apptwo/customer?" + formData,
+            url: "http://localhost:8080/json/customer?" + formData,
             method: "PUT",
             //data: formData,
             success: function (resp) {

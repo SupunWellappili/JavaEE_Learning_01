@@ -50,23 +50,23 @@ public class CustomerServlet extends HttpServlet {
 
             //Generate a customer response with json
             JsonObjectBuilder response = Json.createObjectBuilder();
-            response.add("status","200");
-            response.add("message","Done");
-            response.add("data",arrayBuilder.build());
+            response.add("status", "200");
+            response.add("message", "Done");
+            response.add("data", arrayBuilder.build());
 
-           // writer.print(arrayBuilder.build());
+            // writer.print(arrayBuilder.build());
             writer.print(response.build());
 
-        } catch (Exception e) {
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            resp.sendError(500, throwables.getMessage());
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        /*System.out.println("Customer Post Method Invoke");
-        PrintWriter writer = resp.getWriter();
-        writer.write("Hello Writter !!");*/
 
         //name value from the input field
         String customerID = req.getParameter("customerID");
@@ -74,8 +74,9 @@ public class CustomerServlet extends HttpServlet {
         String customerAddress = req.getParameter("customerAddress");
         String customerSalary = req.getParameter("customerSalary");
 
-        System.out.println(customerID + " " + customerName + " " + customerAddress + " " + customerSalary);
+        // System.out.println(customerID + " " + customerName + " " + customerAddress + " " + customerSalary);
 
+        PrintWriter writer = resp.getWriter();
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -88,14 +89,31 @@ public class CustomerServlet extends HttpServlet {
             pstm.setObject(3, customerAddress);
             pstm.setObject(4, customerSalary);
 
-            boolean b = pstm.executeUpdate() > 0;
-            PrintWriter writer = resp.getWriter();
-            if (b) {
-                writer.write("customer Added!");
+
+            if (pstm.executeUpdate() > 0) {
+                JsonObjectBuilder response = Json.createObjectBuilder();
+                response.add("status", "200");
+                response.add("message", "Successfully Added");
+                response.add("data", "");
+                writer.print(response.build());
             }
 
-        } catch (Exception e) {
+        } catch (ClassNotFoundException e) {
+            JsonObjectBuilder response = Json.createObjectBuilder();
+            response.add("status", "500");
+            response.add("message", "Error");
+            response.add("data", e.getLocalizedMessage());
+            writer.print(response.build());
             e.printStackTrace();
+
+
+        } catch (SQLException throwables) {
+            JsonObjectBuilder response = Json.createObjectBuilder();
+            response.add("status", 500);
+            response.add("message", "Error");
+            response.add("data", throwables.getLocalizedMessage());
+            writer.print(response.build());
+            throwables.printStackTrace();
         }
     }
 
@@ -123,8 +141,11 @@ public class CustomerServlet extends HttpServlet {
                 writer.write("customer Deleted !");
             }
 
-        } catch (Exception e) {
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            resp.sendError(500, throwables.getMessage());
         }
     }
 
