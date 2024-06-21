@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
 
-
 @WebServlet(urlPatterns = "/customer")
 public class CustomerServlet extends HttpServlet {
     @Override
@@ -48,7 +47,15 @@ public class CustomerServlet extends HttpServlet {
 
             //Then build and print the json array
             PrintWriter writer = resp.getWriter();
-            writer.print(arrayBuilder.build());
+
+            //Generate a customer response with json
+            JsonObjectBuilder response = Json.createObjectBuilder();
+            response.add("status","200");
+            response.add("message","Done");
+            response.add("data",arrayBuilder.build());
+
+           // writer.print(arrayBuilder.build());
+            writer.print(response.build());
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -132,7 +139,7 @@ public class CustomerServlet extends HttpServlet {
         String customerAddress = req.getParameter("customerAddress");
         String customerSalary = req.getParameter("customerSalary");
 
-       // System.out.println(customerID + " " + customerName + " " + customerAddress + " " + customerSalary);
+        // System.out.println(customerID + " " + customerName + " " + customerAddress + " " + customerSalary);
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -154,9 +161,9 @@ public class CustomerServlet extends HttpServlet {
 
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-        }catch (SQLException throwables){
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
-            resp.sendError(500,throwables.getMessage());
+            resp.sendError(500, throwables.getMessage());
         }
     }
 }
