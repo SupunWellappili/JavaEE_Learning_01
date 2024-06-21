@@ -78,6 +78,7 @@ public class CustomerServlet extends HttpServlet {
 
         PrintWriter writer = resp.getWriter();
 
+
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection connection = DriverManager.getConnection(
