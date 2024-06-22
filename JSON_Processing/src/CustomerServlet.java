@@ -68,8 +68,9 @@ public class CustomerServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        resp.setStatus(500);
-      /*
+        //resp.setStatus(100);
+        resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+
         //name value from the input field
         String customerID = req.getParameter("customerID");
         String customerName = req.getParameter("customerName");
@@ -79,7 +80,6 @@ public class CustomerServlet extends HttpServlet {
         // System.out.println(customerID + " " + customerName + " " + customerAddress + " " + customerSalary);
 
         PrintWriter writer = resp.getWriter();
-
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -104,8 +104,8 @@ public class CustomerServlet extends HttpServlet {
         } catch (ClassNotFoundException e) {
             JsonObjectBuilder response = Json.createObjectBuilder();
             //resp.setStatus(500); // Your Choice Request show Display
-            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            response.add("status", "500");
+            response.add("status", "404");
+            resp.setStatus(HttpServletResponse.SC_NOT_FOUND); //404
             response.add("message", "Error");
             response.add("data", e.getLocalizedMessage());
             writer.print(response.build());
@@ -113,14 +113,14 @@ public class CustomerServlet extends HttpServlet {
 
         } catch (SQLException throwables) {
             JsonObjectBuilder response = Json.createObjectBuilder();
-            //resp.setStatus(500);
-            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            response.add("status", 500);
+            //resp.setStatus(400);
+            //response.add("status", 400);
+            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);//400
             response.add("message", "Error");
             response.add("data", throwables.getLocalizedMessage());
             writer.print(response.build());
             throwables.printStackTrace();
-        }*/
+        }
     }
 
 

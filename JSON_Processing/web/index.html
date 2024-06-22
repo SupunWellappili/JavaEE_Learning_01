@@ -137,10 +137,12 @@
             success: function (res) {
                 // console.log(typeof resp);
                 console.log(res);
-            },
-            error: function (ob, textStatus, error) {
                 alert(res);
                 loadAllCustomer();
+            },
+            error: function (ob, textStatus, error) {
+                alert(textStatus);
+                console.log(ob.responseText);
             }
         });
 
