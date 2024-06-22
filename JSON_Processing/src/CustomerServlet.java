@@ -135,6 +135,10 @@ public class CustomerServlet extends HttpServlet {
         String customerID = req.getParameter("cusID");
         System.out.println(customerID);
 
+        PrintWriter writer = resp.getWriter();
+
+        resp.setContentType("application/json"); //MIME Types (Multipurpose Internet Mail Extensions )
+
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection connection = DriverManager.getConnection(
@@ -143,17 +147,41 @@ public class CustomerServlet extends HttpServlet {
 
             pstm.setObject(1, customerID);
 
-            boolean b = pstm.executeUpdate() > 0;
-            PrintWriter writer = resp.getWriter();
-            if (b) {
-                writer.write("customer Deleted !");
+
+            if ( pstm.executeUpdate() > 0) {
+                JsonObjectBuilder objectB = Json.createObjectBuilder();
+                objectB.add("status","200");
+                objectB.add("message" , "Successfully Deleted");
+                objectB.add("data","");
+
+                writer.print(objectB.build());
             }
 
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
+           // resp.sendError(500,e.getMessage());
+
+            resp.setStatus(200);
+
+            JsonObjectBuilder objectB = Json.createObjectBuilder();
+            objectB.add("status","500");
+            objectB.add("message" , e.getLocalizedMessage());
+            objectB.add("data","");
+
+            writer.print(objectB.build());
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            resp.sendError(500, throwables.getMessage());
+           // resp.sendError(500, throwables.getMessage());
+
+            resp.setStatus(HttpServletResponse.SC_OK);
+
+            JsonObjectBuilder objectB = Json.createObjectBuilder();
+            objectB.add("status","500");
+            objectB.add("message" , throwables.getLocalizedMessage());
+            objectB.add("data",throwables.getLocalizedMessage());
+
+            writer.print(objectB.build());
         }
     }
 
