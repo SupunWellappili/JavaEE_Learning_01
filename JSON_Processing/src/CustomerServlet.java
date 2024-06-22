@@ -101,6 +101,14 @@ public class CustomerServlet extends HttpServlet {
                 response.add("message", "Successfully Added");
                 response.add("data", "");
                 writer.print(response.build());
+
+            }else {
+                JsonObjectBuilder response = Json.createObjectBuilder();
+                resp.setStatus(HttpServletResponse.SC_ACCEPTED);//201
+                response.add("status", "400");
+                response.add("message", "Successfully Deleted");
+                response.add("data", "Wrong ID Inserted");
+                writer.print(response.build());
             }
 
         } catch (ClassNotFoundException e) {
@@ -128,10 +136,7 @@ public class CustomerServlet extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("Request Received for delete");
-        //if we send data form the application/www-from-urlencoded type doDelete will not
-        //catch values form req.getParameter(); that type is not supported
-        //but we can send data via Query String
+
         String customerID = req.getParameter("cusID");
         System.out.println(customerID);
 
@@ -151,8 +156,15 @@ public class CustomerServlet extends HttpServlet {
             if ( pstm.executeUpdate() > 0) {
                 JsonObjectBuilder objectB = Json.createObjectBuilder();
                 objectB.add("status","200");
-                objectB.add("message" , "Successfully Deleted");
                 objectB.add("data","");
+                objectB.add("message" , "Successfully Deleted");
+
+                writer.print(objectB.build());
+            }else {
+                JsonObjectBuilder objectB = Json.createObjectBuilder();
+                objectB.add("status","400");
+                objectB.add("data","");
+                objectB.add("message" , "Wrong ID Inserted");
 
                 writer.print(objectB.build());
             }
@@ -174,7 +186,9 @@ public class CustomerServlet extends HttpServlet {
             throwables.printStackTrace();
            // resp.sendError(500, throwables.getMessage());
 
-            resp.setStatus(HttpServletResponse.SC_OK);
+           // resp.setStatus(HttpServletResponse.SC_OK);
+            resp.setStatus(200);
+
 
             JsonObjectBuilder objectB = Json.createObjectBuilder();
             objectB.add("status","500");

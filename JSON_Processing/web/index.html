@@ -172,18 +172,25 @@
         $.ajax({
             url: "http://localhost:8080/json/customer?cusID=" + customerID,
             method: "DELETE",
-            success: function (resp) {
-                console.log("deletedddd .html")
-                console.log(typeof resp);
-                console.log(resp);
-                alert(resp);
+            success: function (res) {
+                //console.log("delete .html")
+                console.log(typeof res);
+                console.log(res);
 
-                loadAllCustomer();
+                if (res.status == 200) {
+                    alert(res.message);
+                    loadAllCustomer()
+                } else if (res.status == 400) {
+                    alert(res.data);
+                } else {
+                    alert(res.data);
+                }
             },
             error: function (ob, status, t) {
                 console.log(ob);
                 console.log(status);
                 console.log(t);
+
             }
         })
     })
