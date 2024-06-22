@@ -69,7 +69,7 @@ public class CustomerServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         //resp.setStatus(100);
-        resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+       // resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 
         //name value from the input field
         String customerID = req.getParameter("customerID");
@@ -95,7 +95,9 @@ public class CustomerServlet extends HttpServlet {
 
             if (pstm.executeUpdate() > 0) {
                 JsonObjectBuilder response = Json.createObjectBuilder();
-                response.add("status", "200");
+               // resp.setStatus(201);
+                resp.setStatus(HttpServletResponse.SC_ACCEPTED);//201
+                response.add("status", "201");
                 response.add("message", "Successfully Added");
                 response.add("data", "");
                 writer.print(response.build());
@@ -104,8 +106,8 @@ public class CustomerServlet extends HttpServlet {
         } catch (ClassNotFoundException e) {
             JsonObjectBuilder response = Json.createObjectBuilder();
             //resp.setStatus(500); // Your Choice Request show Display
-            response.add("status", "404");
             resp.setStatus(HttpServletResponse.SC_NOT_FOUND); //404
+            response.add("status", "404");
             response.add("message", "Error");
             response.add("data", e.getLocalizedMessage());
             writer.print(response.build());
@@ -114,8 +116,8 @@ public class CustomerServlet extends HttpServlet {
         } catch (SQLException throwables) {
             JsonObjectBuilder response = Json.createObjectBuilder();
             //resp.setStatus(400);
-            //response.add("status", 400);
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);//400
+            response.add("status", 400);
             response.add("message", "Error");
             response.add("data", throwables.getLocalizedMessage());
             writer.print(response.build());
