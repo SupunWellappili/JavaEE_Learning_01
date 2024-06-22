@@ -101,7 +101,6 @@
                 bindClickEvents();
             }
         });
-
     }
 
 
@@ -137,11 +136,11 @@
             success: function (res) {
                 // console.log(typeof resp);
                 console.log(res);
-                alert(res);
+                alert(res.message);
                 loadAllCustomer();
             },
             error: function (ob, textStatus, error) {
-                alert(textStatus);
+                alert(textStatus.data);
                 console.log(ob.responseText);
             }
         });

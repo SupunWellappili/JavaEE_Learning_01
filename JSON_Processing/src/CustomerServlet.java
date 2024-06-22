@@ -77,9 +77,9 @@ public class CustomerServlet extends HttpServlet {
         String customerAddress = req.getParameter("customerAddress");
         String customerSalary = req.getParameter("customerSalary");
 
-        // System.out.println(customerID + " " + customerName + " " + customerAddress + " " + customerSalary);
-
         PrintWriter writer = resp.getWriter();
+
+        resp.setContentType("application/json"); //MIME Types (Multipurpose Internet Mail Extensions )
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -106,7 +106,7 @@ public class CustomerServlet extends HttpServlet {
         } catch (ClassNotFoundException e) {
             JsonObjectBuilder response = Json.createObjectBuilder();
             //resp.setStatus(500); // Your Choice Request show Display
-            resp.setStatus(HttpServletResponse.SC_NOT_FOUND); //404
+            //resp.setStatus(HttpServletResponse.SC_NOT_FOUND); //404
             response.add("status", "404");
             response.add("message", "Error");
             response.add("data", e.getLocalizedMessage());
@@ -116,7 +116,7 @@ public class CustomerServlet extends HttpServlet {
         } catch (SQLException throwables) {
             JsonObjectBuilder response = Json.createObjectBuilder();
             //resp.setStatus(400);
-            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);//400
+           // resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);//400
             response.add("status", 400);
             response.add("message", "Error");
             response.add("data", throwables.getLocalizedMessage());
