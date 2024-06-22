@@ -68,6 +68,8 @@ public class CustomerServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        resp.setStatus(500);
+      /*
         //name value from the input field
         String customerID = req.getParameter("customerID");
         String customerName = req.getParameter("customerName");
@@ -101,21 +103,24 @@ public class CustomerServlet extends HttpServlet {
 
         } catch (ClassNotFoundException e) {
             JsonObjectBuilder response = Json.createObjectBuilder();
+            //resp.setStatus(500); // Your Choice Request show Display
+            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             response.add("status", "500");
             response.add("message", "Error");
             response.add("data", e.getLocalizedMessage());
             writer.print(response.build());
             e.printStackTrace();
 
-
         } catch (SQLException throwables) {
             JsonObjectBuilder response = Json.createObjectBuilder();
+            //resp.setStatus(500);
+            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             response.add("status", 500);
             response.add("message", "Error");
             response.add("data", throwables.getLocalizedMessage());
             writer.print(response.build());
             throwables.printStackTrace();
-        }
+        }*/
     }
 
 

@@ -137,64 +137,66 @@
             success: function (res) {
                 // console.log(typeof resp);
                 console.log(res);
-
-
-                for (const customer of res) {
-                    customer.id;
-                    customer.name;
-                    customer.address;
-                    customer.salary;
-                }
-
+            },
+            error: function (ob, textStatus, error) {
+                alert(res);
                 loadAllCustomer();
             }
-        })
+        });
+
+
+        for (const customer of res) {
+            customer.id;
+            customer.name;
+            customer.address;
+            customer.salary;
+        }
     });
 
-    //////////////////////////All Load Button////////////////////////////////////
+        //////////////////////////All Load Button////////////////////////////////////
 
 
-    $("#btnClick").click(function () {
-        loadAllCustomer();
-    })
-
-
-    //////////////////////////Delete Button////////////////////////////////////
-
-
-    //http://localhost:8080/apptwo/customer?cusID=C-001&cusName=Supun....
-    $("#btnDeleteCustomer").click(function () {
-
-        let customerID = $("#cusID").val();
-        $.ajax({
-            url: "http://localhost:8080/json/customer?cusID=" + customerID,
-            method: "DELETE",
-            success: function (resp) {
-                console.log("deletedddd .html")
-                console.log(typeof resp);
-                console.log(resp);
-                alert(resp);
-
-                loadAllCustomer();
-            }
+        $("#btnClick").click(function () {
+            loadAllCustomer();
         })
-    })
 
-    //////////////////////////Update Button////////////////////////////////////
 
-    $("#btnUpdateCustomer").click(function () {
-        let formData = $("#customerForm").serialize();
-        console.log(formData)
-        $.ajax({
-            url: "http://localhost:8080/json/customer?" + formData,
-            method: "PUT",
-            //data: formData,
-            success: function (resp) {
-                alert(resp);
-                loadAllCustomer();
-            }
+        //////////////////////////Delete Button////////////////////////////////////
+
+
+        //http://localhost:8080/apptwo/customer?cusID=C-001&cusName=Supun....
+        $("#btnDeleteCustomer").click(function () {
+
+            let customerID = $("#cusID").val();
+            $.ajax({
+                url: "http://localhost:8080/json/customer?cusID=" + customerID,
+                method: "DELETE",
+                success: function (resp) {
+                    console.log("deletedddd .html")
+                    console.log(typeof resp);
+                    console.log(resp);
+                    alert(resp);
+
+                    loadAllCustomer();
+                }
+            })
         })
-    })
+
+        //////////////////////////Update Button////////////////////////////////////
+
+        $("#btnUpdateCustomer").click(function () {
+            let formData = $("#customerForm").serialize();
+            console.log(formData)
+            $.ajax({
+                url: "http://localhost:8080/json/customer?" + formData,
+                method: "PUT",
+                //data: formData,
+                success: function (resp) {
+                    alert(resp);
+                    loadAllCustomer();
+                }
+            })
+        })
 
 
 </script>
