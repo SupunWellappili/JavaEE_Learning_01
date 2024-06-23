@@ -198,15 +198,43 @@
     //////////////////////////Update Button////////////////////////////////////
 
     $("#btnUpdateCustomer").click(function () {
-        let formData = $("#customerForm").serialize();
-        console.log(formData)
+
+        /*var cusOb = {
+            "id": "X002",
+            "name": "xman",
+            "address": "hawlok",
+            "salary": "23000"
+        }*/
+
+        var cusOb = {
+            id: "X002",
+            name: "xman",
+            address: "hawlok",
+            salary: "23000"
+        }
+        ("#cusID").val();
+        $("#cusName").val();
+        $("#cusAddress").val();
+        $("#cusSalary").val();
+
+
         $.ajax({
-            url: "http://localhost:8080/json/customer?" + formData,
+            url: "http://localhost:8080/json/customer",
             method: "PUT",
-            //data: formData,
+            contentType: "application/json", //Request content type json
+            data: JSON.stringify(cusOb), // Java string object covert JSON String object format
             success: function (resp) {
-                alert(resp);
-                loadAllCustomer();
+                if (resp.status == 200) {
+                    alert(resp.message);
+                    loadAllCustomer();
+                } else if (resp.status == 400) {
+                    alert(resp.message);
+                } else {
+                    resp.data;
+                }
+            },
+            error: function (ob, errorStatus) {
+                console.log(ob);
             }
         })
     })

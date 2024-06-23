@@ -1,6 +1,4 @@
-import javax.json.Json;
-import javax.json.JsonArrayBuilder;
-import javax.json.JsonObjectBuilder;
+import javax.json.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -163,14 +161,13 @@ public class CustomerServlet extends HttpServlet {
             }else {
                 JsonObjectBuilder objectB = Json.createObjectBuilder();
                 objectB.add("status","400");
-                objectB.add("data","");
-                objectB.add("message" , "Wrong ID Inserted");
+                objectB.add("data","Wrong ID Inserted");
+                objectB.add("message" , "");
 
                 writer.print(objectB.build());
             }
 
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
            // resp.sendError(500,e.getMessage());
 
             resp.setStatus(200);
@@ -181,9 +178,9 @@ public class CustomerServlet extends HttpServlet {
             objectB.add("data","");
 
             writer.print(objectB.build());
+            e.printStackTrace();
 
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
            // resp.sendError(500, throwables.getMessage());
 
            // resp.setStatus(HttpServletResponse.SC_OK);
@@ -196,6 +193,7 @@ public class CustomerServlet extends HttpServlet {
             objectB.add("data",throwables.getLocalizedMessage());
 
             writer.print(objectB.build());
+            throwables.printStackTrace();
         }
     }
 
@@ -203,14 +201,20 @@ public class CustomerServlet extends HttpServlet {
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        //We have to get updated date form JSON Format
+        JsonReader reader = Json.createReader(req.getReader());
+        JsonObject jsonObject = reader.readObject();
+        String customerID = jsonObject.getString("id");
+        String customerName = jsonObject.getString("name");
+        String customerAddress = jsonObject.getString("address");
+        String customerSalary = jsonObject.getString("salary");
 
-        //name value from the input field
-        String customerID = req.getParameter("customerID");
-        String customerName = req.getParameter("customerName");
-        String customerAddress = req.getParameter("customerAddress");
-        String customerSalary = req.getParameter("customerSalary");
+        // System.out.println(customerID+" "+customerName+" "+customerAddress+" "+customerSalary);
 
-        // System.out.println(customerID + " " + customerName + " " + customerAddress + " " + customerSalary);
+        PrintWriter writer = resp.getWriter();
+
+
+        resp.setContentType("/application/json");
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -224,15 +228,35 @@ public class CustomerServlet extends HttpServlet {
             pstm.setObject(3, customerSalary);
             pstm.setObject(4, customerID);
 
-            boolean b = pstm.executeUpdate() > 0;
-            PrintWriter writer = resp.getWriter();
-            if (b) {
-                writer.write("customer updated !");
+
+            if (pstm.executeUpdate() > 0){
+                JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
+                objectBuilder.add("data","");
+                objectBuilder.add("message","Successfully Updated");
+                objectBuilder.add("status","200");
+                writer.print(objectBuilder.build());
+
+            }else {
+                JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
+                objectBuilder.add("data","");
+                objectBuilder.add("message","Updated Flied");
+                objectBuilder.add("status","400");
+                writer.print(objectBuilder.build());
             }
 
         } catch (ClassNotFoundException e) {
+            JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
+            objectBuilder.add("data",e.getLocalizedMessage());
+            objectBuilder.add("message","Updated Flied");
+            objectBuilder.add("status","500");
+            writer.print(objectBuilder.build());
             e.printStackTrace();
         } catch (SQLException throwables) {
+            JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
+            objectBuilder.add("data",throwables.getLocalizedMessage() );
+            objectBuilder.add("message","Updated Flied");
+            objectBuilder.add("status","500");
+            writer.print(objectBuilder.build());
             throwables.printStackTrace();
             resp.sendError(500, throwables.getMessage());
         }
