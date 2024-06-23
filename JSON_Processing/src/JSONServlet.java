@@ -1,4 +1,6 @@
 
+import jdk.nashorn.internal.scripts.JD;
+
 import javax.json.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -31,17 +33,17 @@ public class JSONServlet extends HttpServlet {
         writer.print(build);*/
 
         //How to generate a array JSON object using JSON Processing
-        JsonArrayBuilder arrayBuilder= Json.createArrayBuilder();//create a json array
+        JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();//create a json array
 
         JsonObjectBuilder objectB = Json.createObjectBuilder(); //create json object one
-        objectB.add("id","c-001");
-        objectB.add("name","Ravi");
-        objectB.add("address","Galle");
+        objectB.add("id", "c-001");
+        objectB.add("name", "Ravi");
+        objectB.add("address", "Galle");
 
         JsonObjectBuilder objectB2 = Json.createObjectBuilder();//create json object two
-        objectB2.add("id","c-001");
-        objectB2.add("name","Ravi");
-        objectB2.add("address","Galle");
+        objectB2.add("id", "c-001");
+        objectB2.add("name", "Ravi");
+        objectB2.add("address", "Galle");
 
         arrayBuilder.add(objectB.build()); //add json object one to the json array
         arrayBuilder.add(objectB2.build()); //add json object two to the json array
@@ -72,18 +74,37 @@ public class JSONServlet extends HttpServlet {
         }*/
 
 
-
         //How to work with JSON Processing
         //How to retrieve data from JSON request using JSON Processing spec
         JsonReader reader = Json.createReader(req.getReader());
         JsonObject jsonObject = reader.readObject();
-        
+
         String id = jsonObject.getString("id");
         System.out.println(id);
 
         String name = jsonObject.getString("name");
         System.out.println(name);
 
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        JsonReader reader = Json.createReader(req.getReader());
+        JsonArray jsonArray = reader.readArray();
+
+        for (JsonValue jsonValue : jsonArray) {
+            String customerID = jsonValue.asJsonObject().getString("id");
+            String customerName = jsonValue.asJsonObject().getString("name");
+            String customerAddress = jsonValue.asJsonObject().getString("address");
+            String customerSalary = jsonValue.asJsonObject().getString("salary");
+
+            System.out.println(customerID+" "+customerName+" "+customerAddress+" "+customerSalary);
+
+        }
+
+
+        
     }
 }
 
