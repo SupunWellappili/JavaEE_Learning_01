@@ -81,7 +81,7 @@
     function loadAllCustomer() {
         $("#tblCustomerJSON").empty();
         $.ajax({
-            url: "http://localhost:8080/json/customer",
+            url: "http://localhost:8080/json/customer?option=GETALL",
             method: "GET",
             //dataType: "JSON", //Please Convert the Response into JSON
             success: function (resp) {
@@ -218,7 +218,7 @@
             url: "http://localhost:8080/json/customer",
             method: "PUT",
             contentType: "application/json", //Request content type json
-            data: JSON.stringify(cusOb), // Java string object covert JSON String object format
+            data: JSON.stringify(cusOb), // Js string object covert JSON String object format
             success: function (resp) {
                 if (resp.status == 200) {
                     alert(resp.message);
