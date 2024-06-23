@@ -100,11 +100,7 @@ public class JSONServlet extends HttpServlet {
             String customerSalary = jsonValue.asJsonObject().getString("salary");
 
             System.out.println(customerID+" "+customerName+" "+customerAddress+" "+customerSalary);
-
         }
-
-
-        
     }
 }
 
