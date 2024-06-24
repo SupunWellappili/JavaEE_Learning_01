@@ -23,7 +23,7 @@ public class ItemServlet extends HttpServlet {
         BasicDataSource bds = (BasicDataSource) servletContext.getAttribute("bds");
 
         try {
-            Connection connection = bds.getConnection();
+            Connection connection = bds.getConnection();//return a connection from the pool
             PreparedStatement pstm = connection.prepareStatement("SELECT * FROM Book");
             ResultSet rst = pstm.executeQuery();
 
@@ -31,6 +31,7 @@ public class ItemServlet extends HttpServlet {
                 String bId = rst.getString(1);
                 System.out.println(bId + ", ");
             }
+            connection.close();//return the connection to the pool from the consumer  pool
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -52,6 +53,7 @@ public class ItemServlet extends HttpServlet {
                 String tittle = rst.getString(2);
                 System.out.println(bId+ ", "+ tittle);
             }
+            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
