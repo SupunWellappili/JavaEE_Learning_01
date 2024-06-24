@@ -27,10 +27,32 @@ public class ItemServlet extends HttpServlet {
 
             while (rst.next()) {
                 String bId = rst.getString(1);
-                System.out.println(bId+", ");
+                System.out.println(bId + ", ");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        ServletContext servletContext = req.getServletContext();
+        BasicDataSource bds = (BasicDataSource) servletContext.getAttribute("bds");
+
+        try {
+            Connection connection = bds.getConnection();
+            PreparedStatement pstm = connection.prepareStatement("SELECT  * FROM Book");
+            ResultSet rst = pstm.executeQuery();
+
+            while (rst.next()) {
+                String bId = rst.getString(1);
+                String tittle = rst.getString(2);
+                System.out.println(bId+ ", "+ tittle);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 }

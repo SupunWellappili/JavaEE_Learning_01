@@ -38,7 +38,7 @@ public class customerServlet extends HttpServlet {
             ResultSet rst = pstm.executeQuery();
             while (rst.next()) {
                 String id = rst.getString(1);
-                System.out.print(id+", ");
+                System.out.println(id+", ");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -58,7 +58,7 @@ public class customerServlet extends HttpServlet {
 
             while (rst.next()) {
                 String id = rst.getString(1);
-                System.out.print(id+", ");
+                System.out.println(id+", ");
             }
         } catch (SQLException e) {
             e.printStackTrace();
