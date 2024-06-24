@@ -6,6 +6,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
+import java.sql.SQLException;
 
 
 @WebListener
@@ -25,12 +26,20 @@ public class MyListener implements ServletContextListener {
         bds.setInitialSize(5);
 
         ServletContext servletContext = servletContextEvent.getServletContext();//a common place for all servlet
-        servletContext.setAttribute("bds",bds);//store the pool inside the servlet context
+        servletContext.setAttribute("bds", bds);//store the pool inside the servlet context
 
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
         System.out.println("context destroyed");
+
+        try {
+            ServletContext servletContext = servletContextEvent.getServletContext();
+            BasicDataSource bds = (BasicDataSource) servletContext.getAttribute("bds");
+            bds.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
