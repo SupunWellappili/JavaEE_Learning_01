@@ -1,5 +1,6 @@
 import org.apache.commons.dbcp2.BasicDataSource;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,6 +28,10 @@ public class customerServlet extends HttpServlet {
         bds.setMaxTotal(5);
         bds.setInitialSize(5);
 
+        ServletContext servletContext = req.getServletContext();//a common place for all servlet
+        servletContext.setAttribute("bds",bds);//store the pool inside the servlet context
+
+
         try {
            Connection connection = bds.getConnection();
             PreparedStatement pstm = connection.prepareStatement("SELECT * FROM Customer");
@@ -40,6 +45,12 @@ public class customerServlet extends HttpServlet {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        super.doPost(req, resp);
     }
 
     @Override
