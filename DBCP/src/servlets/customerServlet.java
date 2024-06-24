@@ -21,7 +21,7 @@ public class customerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        //How to create the DBCP pool
+       /* //How to create the DBCP pool
         BasicDataSource bds = new BasicDataSource();
         bds.setDriverClassName("com.mysql.jdbc.Driver");
         bds.setUrl("jdbc:mysql://localhost:3306/Test");
@@ -31,8 +31,12 @@ public class customerServlet extends HttpServlet {
         bds.setInitialSize(5);
 
         ServletContext servletContext = req.getServletContext();//a common place for all servlet
-        servletContext.setAttribute("bds",bds);//store the pool inside the servlet context
+        servletContext.setAttribute("bds",bds);//store the pool inside the servlet context*/
 
+
+
+        ServletContext servletContext = req.getServletContext();
+        BasicDataSource bds = (BasicDataSource) servletContext.getAttribute("bds");
 
         try {
            Connection connection = bds.getConnection();
