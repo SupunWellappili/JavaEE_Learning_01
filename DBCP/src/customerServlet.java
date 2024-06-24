@@ -40,17 +40,29 @@ public class customerServlet extends HttpServlet {
                 String id = rst.getString(1);
                 System.out.print(id+", ");
             }
-
-
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
+        ServletContext servletContext = req.getServletContext();
+        BasicDataSource bds = (BasicDataSource) servletContext.getAttribute("bds");
+
+        try {
+            Connection connection = bds.getConnection();
+            PreparedStatement pstm = connection.prepareStatement("SELECT * FROM Customer");
+            ResultSet rst = pstm.executeQuery();
+
+            while (rst.next()) {
+                String id = rst.getString(1);
+                System.out.print(id+", ");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
