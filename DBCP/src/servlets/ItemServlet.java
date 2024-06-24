@@ -57,6 +57,5 @@ public class ItemServlet extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 }
