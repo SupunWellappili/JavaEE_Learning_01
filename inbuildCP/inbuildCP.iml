@@ -20,8 +20,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="JSON Processing" level="project" />
-    <orderEntry type="library" name="mysql-connector-java-8.0.24" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Tomcat 8.5.91" level="application_server_libraries" />
+    <orderEntry type="library" exported="" name="JSON Processing" level="project" />
+    <orderEntry type="library" exported="" name="mysql-connector-java-8.0.24" level="project" />
+    <orderEntry type="library" exported="" scope="PROVIDED" name="Tomcat 8.5.91" level="application_server_libraries" />
   </component>
 </module>

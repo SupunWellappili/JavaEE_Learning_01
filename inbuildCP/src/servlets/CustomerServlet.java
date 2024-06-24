@@ -1,35 +1,44 @@
+package servlets;
+
+import javax.annotation.Resource;
 import javax.json.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
 
 @WebServlet(urlPatterns = "/customer")
 public class CustomerServlet extends HttpServlet {
+
+    @Resource(name = "java:comp/env/jdbc/pool")
+    DataSource ds;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        try {
-        String option = req.getParameter("option");
-        resp.setContentType("application/json"); //MIME Types (Multipurpose Internet Mail Extensions )
 
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/Test", "root", "87654321");
+        try {
+            String option = req.getParameter("option");
+            resp.setContentType("application/json"); //MIME Types (Multipurpose Internet Mail Extensions )
+
+            Connection connection = ds.getConnection();
             //Then build and print the json array
             PrintWriter writer = resp.getWriter();
 
-
             switch (option) {
+
                 case "SEARCH":
+                    //Write Code
                     break;
+
                 case "GETALL":
                     Statement stmt = connection.createStatement();
-                    ResultSet rst = stmt.executeQuery("SELECT * FROM customer");
+                    ResultSet rst = stmt.executeQuery("SELECT * FROM Customer");
 
                     JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
 
@@ -64,9 +73,8 @@ public class CustomerServlet extends HttpServlet {
                     break;
             }
 
+            connection.close();
 
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             resp.sendError(500, throwables.getMessage());
@@ -76,8 +84,6 @@ public class CustomerServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        //resp.setStatus(100);
-        // resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 
         //name value from the input field
         String customerID = req.getParameter("customerID");
@@ -90,10 +96,8 @@ public class CustomerServlet extends HttpServlet {
         resp.setContentType("application/json"); //MIME Types (Multipurpose Internet Mail Extensions )
 
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/Test", "root", "87654321");
-            PreparedStatement pstm = connection.prepareStatement("INSERT into customer VALUES (?,?,?,?)");
+            Connection connection = ds.getConnection();
+            PreparedStatement pstm = connection.prepareStatement("INSERT into Customer VALUES (?,?,?,?)");
 
             pstm.setObject(1, customerID);
             pstm.setObject(2, customerName);
@@ -119,16 +123,7 @@ public class CustomerServlet extends HttpServlet {
                 writer.print(response.build());
             }
 
-
-        } catch (ClassNotFoundException e) {
-            JsonObjectBuilder response = Json.createObjectBuilder();
-            //resp.setStatus(500); // Your Choice Request show Display
-            //resp.setStatus(HttpServletResponse.SC_NOT_FOUND); //404
-            response.add("status", "404");
-            response.add("message", "Error");
-            response.add("data", e.getLocalizedMessage());
-            writer.print(response.build());
-            e.printStackTrace();
+            connection.close();
 
         } catch (SQLException throwables) {
             JsonObjectBuilder response = Json.createObjectBuilder();
@@ -154,10 +149,8 @@ public class CustomerServlet extends HttpServlet {
         resp.setContentType("application/json"); //MIME Types (Multipurpose Internet Mail Extensions )
 
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/Test", "root", "87654321");
-            PreparedStatement pstm = connection.prepareStatement("DELETE FROM customer WHERE id=?");
+            Connection connection =ds.getConnection();
+            PreparedStatement pstm = connection.prepareStatement("DELETE FROM Customer WHERE id=?");
 
             pstm.setObject(1, customerID);
 
@@ -178,25 +171,13 @@ public class CustomerServlet extends HttpServlet {
                 writer.print(objectB.build());
             }
 
-        } catch (ClassNotFoundException e) {
-            // resp.sendError(500,e.getMessage());
-
-            resp.setStatus(200);
-
-            JsonObjectBuilder objectB = Json.createObjectBuilder();
-            objectB.add("status", "500");
-            objectB.add("message", e.getLocalizedMessage());
-            objectB.add("data", "");
-
-            writer.print(objectB.build());
-            e.printStackTrace();
+            connection.close();
 
         } catch (SQLException throwables) {
             // resp.sendError(500, throwables.getMessage());
 
             // resp.setStatus(HttpServletResponse.SC_OK);
             resp.setStatus(200);
-
 
             JsonObjectBuilder objectB = Json.createObjectBuilder();
             objectB.add("status", "500");
@@ -228,11 +209,9 @@ public class CustomerServlet extends HttpServlet {
         resp.setContentType("/application/json");
 
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/Test", "root", "87654321");
+            Connection connection = ds.getConnection();
 
-            PreparedStatement pstm = connection.prepareStatement("UPDATE  customer SET name=?, address=?, salary=? WHERE id=?");
+            PreparedStatement pstm = connection.prepareStatement("UPDATE  Customer SET name=?, address=?, salary=? WHERE id=?");
 
             pstm.setObject(1, customerName);
             pstm.setObject(2, customerAddress);
@@ -255,13 +234,8 @@ public class CustomerServlet extends HttpServlet {
                 writer.print(objectBuilder.build());
             }
 
-        } catch (ClassNotFoundException e) {
-            JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
-            objectBuilder.add("data", e.getLocalizedMessage());
-            objectBuilder.add("message", "Updated Flied");
-            objectBuilder.add("status", "500");
-            writer.print(objectBuilder.build());
-            e.printStackTrace();
+            connection.close();
+
         } catch (SQLException throwables) {
             JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
             objectBuilder.add("data", throwables.getLocalizedMessage());
