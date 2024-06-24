@@ -2,14 +2,14 @@
 <Context path="/">
 
     <Resource
-    name ="jdbc/pool"
-    type = "javax.sql.DataSource"
-    driverClassName = "com.mysql.jdbc.Driver"
-    url = "jdbc://localhost:3306/Test"
-    username ="root"
-    password = "87654321"
-    maxTotal ="5"
-    initialSize ="5">
+            name="jdbc/pool"
+            type="javax.sql.DataSource"
+            driverClassName="com.mysql.jdbc.Driver"
+            url="jdbc:mysql://localhost:3306/Test"
+            username="root"
+            password="87654321"
+            maxTotal="5"
+            initialSize="5">
     </Resource>
 
 </Context>
