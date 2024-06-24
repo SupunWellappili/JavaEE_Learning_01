@@ -27,14 +27,13 @@ public class customerServlet extends HttpServlet {
         bds.setMaxTotal(5);
         bds.setInitialSize(5);
 
-        Connection connection = null;
         try {
-            connection = bds.getConnection();
+           Connection connection = bds.getConnection();
             PreparedStatement pstm = connection.prepareStatement("SELECT * FROM Customer");
             ResultSet rst = pstm.executeQuery();
             while (rst.next()) {
                 String id = rst.getString(1);
-                System.out.println(id);
+                System.out.print(id+", ");
             }
 
 
