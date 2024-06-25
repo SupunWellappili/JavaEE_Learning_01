@@ -152,7 +152,7 @@ public class CustomerServlet extends HttpServlet {
 
         resp.setContentType("application/json"); //MIME Types (Multipurpose Internet Mail Extensions )
 
-        resp.addHeader("Access-Control-Allow-Origin", "*");
+        resp.addHeader("Access-Control-Allow-Origin","*");
 
         try {
             Connection connection = ds.getConnection();
@@ -213,6 +213,8 @@ public class CustomerServlet extends HttpServlet {
 
         resp.setContentType("/application/json");
 
+        resp.addHeader("Access-Control-Allow-Origin","*");
+
         try {
             Connection connection = ds.getConnection();
 
@@ -250,5 +252,14 @@ public class CustomerServlet extends HttpServlet {
             throwables.printStackTrace();
             resp.sendError(500, throwables.getMessage());
         }
+    }
+
+
+    //Invoke by doDelete and doPUT method to verify that server is supporting CORS origin requests
+    @Override
+    protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.addHeader("Access-Control-Allow-Origin","*");
+        resp.addHeader("Access-Control-Allow-Methods","DELETE, PUT");
+        resp.addHeader("Access-Control-Allow-Headers","Content-Type");
     }
 }
