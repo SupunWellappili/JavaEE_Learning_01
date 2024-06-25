@@ -53,7 +53,7 @@
     </div>
 </div>
 
-<button id="btnClick" class="btn btn-outline-warning">Save a Request JSON</button>
+<button id="btnClick" class="btn btn-outline-warning" type="button">Save a Request JSON</button>
 
 
 <table class="table table-hover table-info">
@@ -66,9 +66,7 @@
     </tr>
     </thead>
     <tbody id="tblCustomerJSON">
-    <tr>
-
-    </tr>
+    <tr></tr>
     </tbody>
 </table>
 
@@ -80,9 +78,9 @@
 
 
     function loadAllCustomer() {
-        $("#tblCustomerJSON").empty();
+         $("#tblCustomerJSON").empty();
         $.ajax({
-            url: "http://localhost:8080/inbuildcp/customer",
+            url: "http://localhost:8080/filters/customer?option=ggg",
             method: "GET",
             //dataType: "JSON", //Please Convert the Response into JSON
             success: function (resp) {
@@ -90,7 +88,7 @@
                 console.log(resp);
 
 
-                for (const customer of resp) {
+                for (const customer of resp.data) {
                     /*customer.id;
                     customer.name;
                     customer.address;
@@ -99,10 +97,9 @@
                     let row = `<tr><td>${customer.id}</td><td>${customer.name}</td><td>${customer.address}</td><td>${customer.salary}</td></tr>`
                     $("#tblCustomerJSON").append(row);
                 }
-                bindClickEvents();
+            bindClickEvents();
             }
         });
-
     }
 
 
@@ -132,7 +129,7 @@
         var data = $("#customerForm").serialize();// Return Query String of from with name : type- value
         console.log(data);
         $.ajax({
-            url: "http://localhost:8080/inbuildcp/customer",
+            url: "http://localhost:8080/filters/customer",
             method: "POST",
             data: data, //If we send data with the Request
             success: function (res) {

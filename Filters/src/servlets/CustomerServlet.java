@@ -16,7 +16,7 @@ import java.sql.*;
 public class CustomerServlet extends HttpServlet {
 
     @Resource(name = "java:comp/env/jdbc/pool")
-    DataSource dss;
+    DataSource ds;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -26,9 +26,11 @@ public class CustomerServlet extends HttpServlet {
             String option = req.getParameter("option");
             resp.setContentType("application/json"); //MIME Types (Multipurpose Internet Mail Extensions )
 
-            Connection connection = dss.getConnection();
+            Connection connection = ds.getConnection();
             //Then build and print the json array
             PrintWriter writer = resp.getWriter();
+
+            resp.addHeader("Access-Control-Allow-Origin","*");
 
             switch (option) {
 
@@ -95,8 +97,10 @@ public class CustomerServlet extends HttpServlet {
 
         resp.setContentType("application/json"); //MIME Types (Multipurpose Internet Mail Extensions )
 
+        resp.addHeader("Access-Control-Allow-Origin","*");
+
         try {
-            Connection connection = dss.getConnection();
+            Connection connection = ds.getConnection();
             PreparedStatement pstm = connection.prepareStatement("INSERT into Customer VALUES (?,?,?,?)");
 
             pstm.setObject(1, customerID);
@@ -149,7 +153,7 @@ public class CustomerServlet extends HttpServlet {
         resp.setContentType("application/json"); //MIME Types (Multipurpose Internet Mail Extensions )
 
         try {
-            Connection connection =dss.getConnection();
+            Connection connection =ds.getConnection();
             PreparedStatement pstm = connection.prepareStatement("DELETE FROM Customer WHERE id=?");
 
             pstm.setObject(1, customerID);
@@ -209,7 +213,7 @@ public class CustomerServlet extends HttpServlet {
         resp.setContentType("/application/json");
 
         try {
-            Connection connection = dss.getConnection();
+            Connection connection = ds.getConnection();
 
             PreparedStatement pstm = connection.prepareStatement("UPDATE  Customer SET name=?, address=?, salary=? WHERE id=?");
 
