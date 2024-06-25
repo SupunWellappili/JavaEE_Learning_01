@@ -5,6 +5,8 @@
       <module fileurl="file://$PROJECT_DIR$/AppOne/AppOne.iml" filepath="$PROJECT_DIR$/AppOne/AppOne.iml" />
       <module fileurl="file://$PROJECT_DIR$/AppTwo/AppTwo.iml" filepath="$PROJECT_DIR$/AppTwo/AppTwo.iml" />
       <module fileurl="file://$PROJECT_DIR$/DBCP/DBCP.iml" filepath="$PROJECT_DIR$/DBCP/DBCP.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Filters/Filters.iml" filepath="$PROJECT_DIR$/Filters/Filters.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FrondEnd/FrondEnd.iml" filepath="$PROJECT_DIR$/FrondEnd/FrondEnd.iml" />
       <module fileurl="file://$PROJECT_DIR$/HelloServlet/HelloServlet.iml" filepath="$PROJECT_DIR$/HelloServlet/HelloServlet.iml" />
       <module fileurl="file://$PROJECT_DIR$/HttpRequest/HttpRequest.iml" filepath="$PROJECT_DIR$/HttpRequest/HttpRequest.iml" />
       <module fileurl="file://$PROJECT_DIR$/JSON_Processing/JSON_Processing.iml" filepath="$PROJECT_DIR$/JSON_Processing/JSON_Processing.iml" />
