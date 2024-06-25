@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AJAX With jQuery copy (inbuild-CP)</title>
+    <title>AJAX With jQuery copy (Filters)</title>
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
 
 </head>
@@ -78,7 +78,7 @@
 
 
     function loadAllCustomer() {
-         $("#tblCustomerJSON").empty();
+        $("#tblCustomerJSON").empty();
         $.ajax({
             url: "http://localhost:8080/filters/customer?option=ggg",
             method: "GET",
@@ -86,7 +86,6 @@
             success: function (resp) {
                 console.log(typeof resp);
                 console.log(resp);
-
 
                 for (const customer of resp.data) {
                     /*customer.id;
@@ -97,7 +96,7 @@
                     let row = `<tr><td>${customer.id}</td><td>${customer.name}</td><td>${customer.address}</td><td>${customer.salary}</td></tr>`
                     $("#tblCustomerJSON").append(row);
                 }
-            bindClickEvents();
+                bindClickEvents();
             }
         });
     }
@@ -134,9 +133,8 @@
             data: data, //If we send data with the Request
             success: function (res) {
                 // console.log(typeof resp);
-                console.log(res);
                 alert(res)
-
+                console.log(res);
 
                 for (const customer of res) {
                     customer.id;
@@ -144,8 +142,7 @@
                     customer.address;
                     customer.salary;
                 }
-
-                loadAllCustomer();
+                    loadAllCustomer();
             }
         })
     });
@@ -166,7 +163,7 @@
 
         let customerID = $("#cusID").val();
         $.ajax({
-            url: "http://localhost:8080/inbuildcp/customer?cusID=" + customerID,
+            url: "http://localhost:8080/filters/customer?cusID=" + customerID,
             method: "DELETE",
             success: function (resp) {
                 console.log("deletedddd .html")
@@ -185,7 +182,7 @@
         let formData = $("#customerForm").serialize();
         console.log(formData)
         $.ajax({
-            url: "http://localhost:8080/inbuildcp/customer?" + formData,
+            url: "http://localhost:8080/filters/customer?" + formData,
             method: "PUT",
             //data: formData,
             success: function (resp) {

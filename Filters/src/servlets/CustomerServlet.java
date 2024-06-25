@@ -21,6 +21,7 @@ public class CustomerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        resp.addHeader("Access-Control-Allow-Origin", "*");
 
         try {
             String option = req.getParameter("option");
@@ -30,7 +31,6 @@ public class CustomerServlet extends HttpServlet {
             //Then build and print the json array
             PrintWriter writer = resp.getWriter();
 
-            resp.addHeader("Access-Control-Allow-Origin","*");
 
             switch (option) {
 
@@ -97,7 +97,7 @@ public class CustomerServlet extends HttpServlet {
 
         resp.setContentType("application/json"); //MIME Types (Multipurpose Internet Mail Extensions )
 
-        resp.addHeader("Access-Control-Allow-Origin","*");
+        resp.addHeader("Access-Control-Allow-Origin", "*");
 
         try {
             Connection connection = ds.getConnection();
@@ -152,8 +152,10 @@ public class CustomerServlet extends HttpServlet {
 
         resp.setContentType("application/json"); //MIME Types (Multipurpose Internet Mail Extensions )
 
+        resp.addHeader("Access-Control-Allow-Origin", "*");
+
         try {
-            Connection connection =ds.getConnection();
+            Connection connection = ds.getConnection();
             PreparedStatement pstm = connection.prepareStatement("DELETE FROM Customer WHERE id=?");
 
             pstm.setObject(1, customerID);
@@ -208,7 +210,6 @@ public class CustomerServlet extends HttpServlet {
         // System.out.println(customerID+" "+customerName+" "+customerAddress+" "+customerSalary);
 
         PrintWriter writer = resp.getWriter();
-
 
         resp.setContentType("/application/json");
 
