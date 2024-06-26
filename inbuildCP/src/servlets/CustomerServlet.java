@@ -242,7 +242,6 @@ public class CustomerServlet extends HttpServlet {
             objectBuilder.add("message", "Updated Flied");
             objectBuilder.add("status", "500");
             writer.print(objectBuilder.build());
-            throwables.printStackTrace();
             resp.sendError(500, throwables.getMessage());
         }
     }

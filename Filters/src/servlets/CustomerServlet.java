@@ -209,11 +209,12 @@ public class CustomerServlet extends HttpServlet {
 
         // System.out.println(customerID+" "+customerName+" "+customerAddress+" "+customerSalary);
 
+        resp.addHeader("Access-Control-Allow-Origin","*");
+
         PrintWriter writer = resp.getWriter();
 
         resp.setContentType("/application/json");
 
-        resp.addHeader("Access-Control-Allow-Origin","*");
 
         try {
             Connection connection = ds.getConnection();
@@ -249,17 +250,20 @@ public class CustomerServlet extends HttpServlet {
             objectBuilder.add("message", "Updated Flied");
             objectBuilder.add("status", "500");
             writer.print(objectBuilder.build());
-            throwables.printStackTrace();
+
             resp.sendError(500, throwables.getMessage());
+            throwables.printStackTrace();
         }
     }
+
+
 
 
     //Invoke by doDelete and doPUT method to verify that server is supporting CORS origin requests
     @Override
     protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.addHeader("Access-Control-Allow-Origin","*");
-        resp.addHeader("Access-Control-Allow-Methods","DELETE, PUT");
-        resp.addHeader("Access-Control-Allow-Headers","Content-Type");
+        resp.addHeader("Access-Control-Allow-Methods","DELETE,PUT");
+        resp.addHeader("Access-Control-Allow-Headers","content-type");
     }
 }

@@ -1,15 +1,16 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AJAX With jQuery copy (Filters)</title>
+    <title>AJAX With jQuery copy (Frond End + Filters)</title>
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
 
 </head>
 <body>
 
 <!--File Type JSON-->
-<h1>Hello JSON type | jQuery...!</h1>
+<h1> Hello JSON type | jQuery...!</h1>
 
 <!--customer Save-->
 <div class="row-mt-3">
@@ -53,7 +54,255 @@
     </div>
 </div>
 
-<button id="btnClick" class="btn btn-outline-warning" type="button">Save a Request JSON</button>
+<button id="btnClick" class="btn btn-outline-warning">Get All</button>
+
+
+<table class="table table-hover table-info">
+    <thead>
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="col">NAME</th>
+        <th scope="col">ADDRESS</th>
+        <th scope="col">SALARY</th>
+    </tr>
+    </thead>
+    <tbody id="tblCustomerJSON">
+    <tr>
+
+    </tr>
+    </tbody>
+</table>
+
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<!--<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+
+
+<script>
+    function loadAllCustomer() {
+        $("#tblCustomerJSON").empty();
+        $.ajax({
+            url: "http://localhost:8080/filters/customer?option=ggg",
+            method: "GET",
+            //dataType: "JSON", //Please Convert the Response into JSON
+            success: function (resp) {
+                console.log(typeof resp);
+                console.log(resp);
+
+
+                for (const customer of resp.data) { //resp.data --> Table loaded
+                    /*customer.id;
+                    customer.name;
+                    customer.address;
+                    customer.salary;*/
+
+                    let row = `<tr><td>${customer.id}</td><td>${customer.name}</td><td>${customer.address}</td><td>${customer.salary}</td></tr>`
+                    $("#tblCustomerJSON").append(row);
+                }
+                bindClickEvents();
+            }
+        });
+    }
+
+
+    function bindClickEvents() {
+        $("#tblCustomerJSON>tr").click(function () {
+
+            //Get Values from the selected row
+            let id = $(this).children().eq(0).text();
+            let name = $(this).children().eq(1).text();
+            let address = $(this).children().eq(2).text();
+            let salary = $(this).children().eq(3).text();
+
+
+            //Set Value to the text-Filed
+            $("#cusID").val(id);
+            $("#cusName").val(name);
+            $("#cusAddress").val(address);
+            $("#cusSalary").val(salary);
+        });
+    }
+
+
+    //////////////////////////Save Button////////////////////////////////////
+
+    $("#btnSaveCustomer").click(function () {
+        $("#tblCustomerJSON").empty();
+        var data = $("#customerForm").serialize();// Return Query String of from with name : type - value
+        console.log(data);
+        $.ajax({
+            url: "http://localhost:8080/filters/customer",
+            method: "POST",
+            data: data, //If we send data with the Request
+            success: function (res) {
+                // console.log(typeof resp);
+                console.log(res);
+                alert(res.message);
+                loadAllCustomer();
+            },
+            error: function (ob, textStatus, error) {
+                alert(textStatus.data);
+                console.log(ob.responseText);
+            }
+        });
+
+
+        for (const customer of res.data) {
+            customer.id;
+            customer.name;
+            customer.address;
+            customer.salary;
+        }
+    });
+
+    //////////////////////////All Load Button////////////////////////////////////
+
+
+    $("#btnClick").click(function () {
+        loadAllCustomer();
+    })
+
+
+    //////////////////////////Delete Button////////////////////////////////////
+
+
+    //http://localhost:8080/apptwo/customer?cusID=C-001&cusName=Supun....
+    $("#btnDeleteCustomer").click(function () {
+
+        let customerID = $("#cusID").val();
+        $.ajax({
+            url: "http://localhost:8080/filters/customer?cusID=" + customerID,
+            method: "DELETE",
+            success: function (res) {
+                //console.log("delete .html")
+                console.log(typeof res);
+                console.log(res);
+
+                if (res.status == 200) {
+                    alert(res.message);
+                    loadAllCustomer()
+                } else if (res.status == 400) {
+                    alert(res.data);
+                } else {
+                    alert(res.data);
+                }
+            },
+            error: function (ob, status, t) {
+                console.log(ob);
+                console.log(status);
+                console.log(t);
+
+            }
+        })
+    })
+
+    //////////////////////////Update Button////////////////////////////////////
+
+    $("#btnUpdateCustomer").click(function () {
+
+        /*var cusOb = {
+            "id": "X002",
+            "name": "xman",
+            "address": "hawlok",
+            "salary": "23000"
+        }*/
+
+        var cusOb = {
+            id: $("#cusID").val(),
+            name: $("#cusName").val(),
+            address: $("#cusAddress").val(),
+            salary: $("#cusSalary").val()
+        }
+
+
+        $.ajax({
+            url: "http://localhost:8080/filters/customer",
+            method: "PUT",
+            contentType: "application/json", //Request content type json
+            data: JSON.stringify(cusOb), // Js string object covert JSON String object format
+            success: function (resp) {
+                if (resp.status == 200) {
+                    alert(resp.message);
+                    loadAllCustomer();
+                } else if (resp.status == 400) {
+                    alert(resp.message);
+                } else {
+                    resp.data;
+                }
+            },
+            error: function (ob, errorStatus) {
+                console.log(ob);
+            }
+        })
+    })
+
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+<!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AJAX With jQuery copy (Filters)</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+
+</head>
+<body>
+
+&lt;!&ndash;File Type JSON&ndash;&gt;
+<h1>Hello JSON type | jQuery...!</h1>
+
+&lt;!&ndash;customer Save&ndash;&gt;
+<div class="row-mt-3">
+    <div class="col-5">
+        <form id="customerForm">
+            <div class="mb-3">
+                <label for="CusID" class="form-label">Customer ID </label>
+                <input type="text" class="form-control" id="cusID" placeholder="Customer ID" name="customerID">
+            </div>
+
+            <div class="mb-3">
+                <label for="cusName" class="form-label">Customer Name </label>
+                <input type="text" class="form-control" id="cusName" placeholder="Customer ID" name="customerName">
+            </div>
+
+            <div class="mb-3">
+                <label for="cusAddress" class="form-label">Customer Address </label>
+                <input type="text" class="form-control" id="cusAddress" placeholder="Customer ID"
+                       name="customerAddress">
+            </div>
+
+            <div class="mb-3">
+                <label for="cusSalary" class="form-label">Customer Salary </label>
+                <input type="text" class="form-control" id="cusSalary" placeholder="Customer ID" name="customerSalary">
+            </div>
+
+            <div class="mb-3">
+                <button type="button" id="btnSaveCustomer" class="btn btn-outline-primary">Save Customer</button>
+            </div>
+
+            <div class="mb-3">
+                <button type="button" id="btnDeleteCustomer" class="btn btn-outline-danger">Delete Customer</button>
+            </div>
+
+
+            <div class="mb-3">
+                <button type="button" id="btnUpdateCustomer" class="btn btn-outline-dark">Update Customer</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<button id="btnClick" class="btn btn-outline-warning" type="button">Get All</button>
 
 
 <table class="table table-hover table-info">
@@ -71,7 +320,7 @@
 </table>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<!--<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+&lt;!&ndash;<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>&ndash;&gt;
 
 
 <script>
@@ -182,9 +431,11 @@
         let formData = $("#customerForm").serialize();
         console.log(formData)
         $.ajax({
-            url: "http://localhost:8080/filters/customer?" + formData,
+          //  url: "http://localhost:8080/filters/customer?" + formData,
+            url: "http://localhost:8080/filters/customer",
             method: "PUT",
             //data: formData,
+            data: JSON.stringify(cusOb),
             success: function (resp) {
                 alert(resp);
                 loadAllCustomer();
@@ -195,4 +446,4 @@
 
 </script>
 </body>
-</html>
+</html>-->
