@@ -25,7 +25,7 @@ public class CustomerServlet extends HttpServlet {
         writer1.write("Do Get Method customer Received");
         System.out.println("Do Get Method customer Received");
 
-        resp.addHeader("Access-Control-Allow-Origin", "*");
+       // resp.addHeader("Access-Control-Allow-Origin", "*");
 
         try {
             String option = req.getParameter("option");
@@ -101,7 +101,7 @@ public class CustomerServlet extends HttpServlet {
 
         resp.setContentType("application/json"); //MIME Types (Multipurpose Internet Mail Extensions )
 
-        resp.addHeader("Access-Control-Allow-Origin", "*");
+       // resp.addHeader("Access-Control-Allow-Origin", "*");
 
         try {
             Connection connection = ds.getConnection();
@@ -156,7 +156,7 @@ public class CustomerServlet extends HttpServlet {
 
         resp.setContentType("application/json"); //MIME Types (Multipurpose Internet Mail Extensions )
 
-        resp.addHeader("Access-Control-Allow-Origin","*");
+       // resp.addHeader("Access-Control-Allow-Origin","*");
 
         try {
             Connection connection = ds.getConnection();
@@ -213,7 +213,7 @@ public class CustomerServlet extends HttpServlet {
 
         // System.out.println(customerID+" "+customerName+" "+customerAddress+" "+customerSalary);
 
-        resp.addHeader("Access-Control-Allow-Origin","*");
+        //resp.addHeader("Access-Control-Allow-Origin","*");
 
         PrintWriter writer = resp.getWriter();
 
@@ -264,8 +264,8 @@ public class CustomerServlet extends HttpServlet {
     //Invoke by doDelete and doPUT method to verify that server is supporting CORS origin requests
     @Override
     protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.addHeader("Access-Control-Allow-Origin","*");
+        /*resp.addHeader("Access-Control-Allow-Origin","*");
         resp.addHeader("Access-Control-Allow-Methods","DELETE,PUT");
-        resp.addHeader("Access-Control-Allow-Headers","content-type");
+        resp.addHeader("Access-Control-Allow-Headers","content-type");*/
     }
 }

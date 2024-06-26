@@ -28,6 +28,7 @@ public class MyFilter implements Filter {
 
         //before the request send
         System.out.println("Stat");
+
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
 
@@ -38,6 +39,12 @@ public class MyFilter implements Filter {
         writer.print("MY-COMPANY" +" "+ "IJSE");
 
         resp.addHeader("MY-COMPANY","IJSE");
+
+
+        resp.addHeader("Access-Control-Allow-Origin","*");
+        resp.addHeader("Access-Control-Allow-Methods","DELETE,PUT");
+        resp.addHeader("Access-Control-Allow-Headers","content-type");
+
 
         //after the request response
         System.out.println("End");
