@@ -21,6 +21,10 @@ public class CustomerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        PrintWriter writer1 = resp.getWriter();
+        writer1.write("Do Get Method customer Received");
+        System.out.println("Do Get Method customer Received");
+
         resp.addHeader("Access-Control-Allow-Origin", "*");
 
         try {
@@ -255,8 +259,6 @@ public class CustomerServlet extends HttpServlet {
             throwables.printStackTrace();
         }
     }
-
-
 
 
     //Invoke by doDelete and doPUT method to verify that server is supporting CORS origin requests

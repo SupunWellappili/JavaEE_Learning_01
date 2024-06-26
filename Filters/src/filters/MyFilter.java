@@ -5,7 +5,7 @@ import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
 
 
-@WebFilter(urlPatterns = "/item")
+@WebFilter(urlPatterns = {"/customer","/item"})
 public class MyFilter implements Filter {
     public MyFilter() {
         System.out.println("Object Created From My Filter");
@@ -19,10 +19,14 @@ public class MyFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        System.out.println("Stat");
        // System.out.println("Do Filter Method Called");
 
-        filterChain.doFilter(servletRequest,servletResponse);
+        //before the request send
+        System.out.println("Stat");
+
+        filterChain.doFilter(servletRequest,servletResponse);//process request to the servlet
+
+        //after the request response
         System.out.println("End");
 
     }

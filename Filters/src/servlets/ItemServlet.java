@@ -15,7 +15,7 @@ public class ItemServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter writer = resp.getWriter();
-        writer.write("Do Get Method Received");
-        System.out.println("Do Get Method Received");
+        writer.write("Do Get Method item Received");
+        System.out.println("Do Get Method item Received");
     }
 }
