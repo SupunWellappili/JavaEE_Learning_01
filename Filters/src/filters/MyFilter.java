@@ -5,7 +5,7 @@ import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
 
 
-@WebFilter(urlPatterns = {"/customer","/item"})
+@WebFilter(urlPatterns = {"/customer","/item","/order"})
 public class MyFilter implements Filter {
     public MyFilter() {
         System.out.println("Object Created From My Filter");
